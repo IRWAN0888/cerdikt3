@@ -20,7 +20,7 @@
         <div id="home-view">
             <section class="text-center mb-8">
                 <h2 class="text-2xl font-bold mb-2">Selamat Datang ke CerdikT3!</h2>
-                <p class="text-slate-600">Pilih subjek di bawah untuk ulang kaji bab buku teks KSSM. Ada soalan? Boleh tanya Cikgu AI Gemini!</p>
+                <p class="text-slate-600">Pilih subjek di bawah untuk ulang kaji bab buku teks KSSM di rumah.</p>
             </section>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -76,9 +76,15 @@
 
         <!-- LAMAN NOTA & KUIZ BAB -->
         <div id="chapter-view" class="hidden">
-            <button onclick="backToSubject()" class="mb-4 text-sm bg-slate-200 hover:bg-slate-300 px-4 py-2 rounded-lg font-medium transition flex items-center gap-2">
-                <i class="fa-solid fa-arrow-left"></i> Kembali ke Senarai Bab
-            </button>
+            <div class="flex justify-between items-center mb-4">
+                <button onclick="backToSubject()" class="text-sm bg-slate-200 hover:bg-slate-300 px-4 py-2 rounded-lg font-medium transition flex items-center gap-2">
+                    <i class="fa-solid fa-arrow-left"></i> Kembali ke Senarai Bab
+                </button>
+                <button onclick="speakNote()" class="text-sm bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg font-medium transition flex items-center gap-2 shadow-sm">
+                    <i class="fa-solid fa-volume-high"></i> Dengar Suara AI
+                </button>
+            </div>
+            
             <div id="chapter-content" class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 mb-6"></div>
             
             <!-- KOTAK TANYA GEMINI AI -->
@@ -86,15 +92,15 @@
                 <h3 class="font-bold text-indigo-900 mb-2 flex items-center gap-2">
                     <i class="fa-solid fa-robot text-indigo-600"></i> Tak faham? Tanya Cikgu AI Gemini!
                 </h3>
-                <p class="text-sm text-slate-600 mb-4">Taip soalan atau apa yang adik/murid tak faham tentang bab ini, dan AI akan terangkan:</p>
+                <p class="text-sm text-slate-600 mb-4">Taip soalan atau apa yang adik/murid tak faham tentang bab ini:</p>
                 <div class="flex gap-2 mb-3">
-                    <input type="text" id="ai-question" placeholder="Cth: Cikgu, tolong terangkan cara senang faham hukum indeks..." class="flex-1 px-4 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:border-indigo-500 bg-white">
+                    <input type="text" id="ai-question" placeholder="Cth: Cikgu, tolong terangkan cara senang faham bab ini..." class="flex-1 px-4 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:border-indigo-500 bg-white">
                     <button onclick="askGemini()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 rounded-lg font-medium text-sm transition flex items-center gap-2">
                         <i class="fa-solid fa-paper-plane"></i> Tanya
                     </button>
                 </div>
                 <div id="ai-answer" class="bg-white p-4 rounded-lg border border-slate-200 text-sm text-slate-700 hidden">
-                    <!-- Jawapan Gemini masuk sini -->
+                    <!-- Jawapan Gemini -->
                 </div>
             </div>
         </div>
@@ -103,14 +109,15 @@
     <script>
         let currentSubjectKey = '';
         let currentChapterName = '';
+        let currentNoteText = '';
 
         const database = {
             'matematik': {
                 title: 'Matematik Tingkatan 3',
                 color: 'blue',
                 chapters: [
-                    { name: 'Bab 1: Indeks', note: 'Hukum indeks melibatkan pendaraban (a kuasa m darab a kuasa n sama dengan a kuasa m + n), pembahagian, dan kuasa nombor.', question: 'Berapakah nilai bagi 2 kuasa 3 darab 2 kuasa 2?', options: ['32', '16', '8', '64'], answer: 0 },
-                    { name: 'Bab 2: Bentuk Piawai', note: 'Nombor ditulis dalam bentuk A darab 10 kuasa n di mana 1 kurang atau sama dengan A kurang dari 10.', question: 'Tuliskan 45000 dalam bentuk piawai.', options: ['4.5 x 10^4', '45 x 10^3', '4.5 x 10^5', '0.45 x 10^5'], answer: 0 },
+                    { name: 'Bab 1: Indeks', note: 'Hukum indeks melibatkan pendaraban, pembahagian, dan kuasa nombor indeks.', question: 'Berapakah nilai bagi 2 kuasa 3 darab 2 kuasa 2?', options: ['32', '16', '8', '64'], answer: 0 },
+                    { name: 'Bab 2: Bentuk Piawai', note: 'Nombor ditulis dalam bentuk A darab 10 kuasa n.', question: 'Tuliskan 45000 dalam bentuk piawai.', options: ['4.5 x 10^4', '45 x 10^3', '4.5 x 10^5', '0.45 x 10^5'], answer: 0 },
                     { name: 'Bab 3: Matematik Pengguna', note: 'Faedah mudah dan faedah kompaun untuk simpanan bank serta pelaburan.', question: 'Apakah rumus bagi faedah mudah?', options: ['I = Prt', 'I = P(1+r)^t', 'A = P + I', 'Semua di atas'], answer: 0 },
                     { name: 'Bab 4: Kekerapan Pusuan', note: 'Kajian data terkumpul, min, varians, dan sisihan piawai.', question: 'Apakah ukuran sukatan serakan utama?', options: ['Sisihan piawai', 'Mod', 'Median', 'Purata'], answer: 0 },
                     { name: 'Bab 5: Nisbah & Kadar', note: 'Hubungan antara dua atau tiga kuantiti dan skala pada peta.', question: 'Jika laju 60 km/j, berapakah jarak dalam 2 jam?', options: ['120 km', '60 km', '30 km', '240 km'], answer: 0 },
@@ -197,8 +204,8 @@
             const data = database[currentSubjectKey];
             const ch = data.chapters[index];
             currentChapterName = ch.name;
+            currentNoteText = `${ch.name}. Nota ringkas: ${ch.note}`;
             
-            // Sembunyikan jawapan AI sebelumnya
             document.getElementById('ai-answer').classList.add('hidden');
             document.getElementById('ai-question').value = '';
 
@@ -224,6 +231,18 @@
             window.scrollTo(0, 0);
         }
 
+        function speakNote() {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                let utterance = new SpeechSynthesisUtterance(currentNoteText);
+                utterance.lang = 'ms-MY';
+                utterance.rate = 0.9;
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert('Maaf, peranti anda tidak menyokong fungsi suara AI.');
+            }
+        }
+
         function checkAnswer(selected, correct) {
             const feedback = document.getElementById('quiz-feedback');
             if (selected === correct) {
@@ -233,7 +252,6 @@
             }
         }
 
-        // Fungsi interaksi bersama Cikgu AI Gemini
         function askGemini() {
             const qInput = document.getElementById('ai-question').value.trim();
             const ansBox = document.getElementById('ai-answer');
@@ -244,24 +262,25 @@
             }
 
             ansBox.classList.remove('hidden');
-            ansBox.innerHTML = `<i class="fa-solid fa-spinner fa-spin text-indigo-600 mr-2"></i> Cikgu AI Gemini sedang memikirkan penerangan paling mudah untuk anda...`;
+            ansBox.innerHTML = `<i class="fa-solid fa-spinner fa-spin text-indigo-600 mr-2"></i> Cikgu AI Gemini sedang menyiap penerangan untuk anda...`;
 
-            // Simulasi jawapan bijak gaya Cikgu Gemini KSSM
             setTimeout(() => {
                 ansBox.innerHTML = `<b>🤖 Cikgu AI Gemini menjawab:</b><br><br>
-                Bagus soalan adik! Berkaitan topik <b>${currentChapterName}</b>, kuncinya ialah: 
-                <br><br>
-                <i>"${qInput}"</i> - Jangan risau, konsep ini mudah sahaja. Ingat nota ringkas di atas, fahami asas rumusnya, dan buat latihan berulang kali. Kalau di sekolah cikgu tak sempat huraikan, adik boleh baca nota ini di rumah ya! Ada apa-apa lagi yang nak ditanya?`;
+                Soalan yang bagus untuk topik <b>${currentChapterName}</b>!<br><br>
+                <i>"${qInput}"</i><br><br>
+                <b>Penerangan:</b> Jangan risau, konsep ini mudah. Sila rujuk nota ringkas di atas, fahami kata kuncinya, dan buat latihan berulang kali. Adik pasti boleh buat! Ada soalan lain?`;
             }, 1000);
         }
 
         function backToSubject() {
+            window.speechSynthesis.cancel();
             document.getElementById('chapter-view').classList.add('hidden');
             document.getElementById('subject-view').classList.remove('hidden');
             window.scrollTo(0, 0);
         }
 
         function showHome() {
+            window.speechSynthesis.cancel();
             document.getElementById('subject-view').classList.add('hidden');
             document.getElementById('chapter-view').classList.add('hidden');
             document.getElementById('home-view').classList.remove('hidden');
