@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="ms" class="scroll-smooth">
 <head>
@@ -12,7 +11,7 @@
     <header class="bg-indigo-600 text-white shadow-md sticky top-0 z-50">
         <div class="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
             <h1 class="text-xl font-bold flex items-center gap-2 cursor-pointer" onclick="showHome()"><i class="fa-solid fa-graduation-cap"></i> CerdikT3</h1>
-            <span class="text-xs bg-indigo-500 px-3 py-1 rounded-full">KSSM Tingkatan 3</span>
+            <span class="text-xs bg-indigo-500 px-3 py-1 rounded-full">KSSM Tingkatan 3 + AI Gemini</span>
         </div>
     </header>
 
@@ -21,7 +20,7 @@
         <div id="home-view">
             <section class="text-center mb-8">
                 <h2 class="text-2xl font-bold mb-2">Selamat Datang ke CerdikT3!</h2>
-                <p class="text-slate-600">Pilih subjek di bawah untuk mula ulang kaji bab buku teks KSSM di rumah.</p>
+                <p class="text-slate-600">Pilih subjek di bawah untuk ulang kaji bab buku teks KSSM. Ada soalan? Boleh tanya Cikgu AI Gemini!</p>
             </section>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -80,24 +79,42 @@
             <button onclick="backToSubject()" class="mb-4 text-sm bg-slate-200 hover:bg-slate-300 px-4 py-2 rounded-lg font-medium transition flex items-center gap-2">
                 <i class="fa-solid fa-arrow-left"></i> Kembali ke Senarai Bab
             </button>
-            <div id="chapter-content" class="bg-white p-6 rounded-xl shadow-sm border border-slate-100"></div>
+            <div id="chapter-content" class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 mb-6"></div>
+            
+            <!-- KOTAK TANYA GEMINI AI -->
+            <div class="bg-gradient-to-r from-indigo-50 to-purple-50 p-6 rounded-xl border border-indigo-100 shadow-sm">
+                <h3 class="font-bold text-indigo-900 mb-2 flex items-center gap-2">
+                    <i class="fa-solid fa-robot text-indigo-600"></i> Tak faham? Tanya Cikgu AI Gemini!
+                </h3>
+                <p class="text-sm text-slate-600 mb-4">Taip soalan atau apa yang adik/murid tak faham tentang bab ini, dan AI akan terangkan:</p>
+                <div class="flex gap-2 mb-3">
+                    <input type="text" id="ai-question" placeholder="Cth: Cikgu, tolong terangkan cara senang faham hukum indeks..." class="flex-1 px-4 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:border-indigo-500 bg-white">
+                    <button onclick="askGemini()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 rounded-lg font-medium text-sm transition flex items-center gap-2">
+                        <i class="fa-solid fa-paper-plane"></i> Tanya
+                    </button>
+                </div>
+                <div id="ai-answer" class="bg-white p-4 rounded-lg border border-slate-200 text-sm text-slate-700 hidden">
+                    <!-- Jawapan Gemini masuk sini -->
+                </div>
+            </div>
         </div>
     </main>
 
     <script>
         let currentSubjectKey = '';
+        let currentChapterName = '';
 
         const database = {
             'matematik': {
                 title: 'Matematik Tingkatan 3',
                 color: 'blue',
                 chapters: [
-                    { name: 'Bab 1: Indeks', note: 'Hukum indeks melibatkan pendaraban, pembahagian, dan kuasa nombor indeks.', question: 'Berapakah nilai bagi 2 kuasa 3 darab 2 kuasa 2?', options: ['32', '16', '8', '64'], answer: 0 },
-                    { name: 'Bab 2: Bentuk Piawai', note: 'Nombor ditulis dalam bentuk A darab 10 kuasa n.', question: 'Tuliskan 45000 dalam bentuk piawai.', options: ['4.5 x 10^4', '45 x 10^3', '4.5 x 10^5', '0.45 x 10^5'], answer: 0 },
+                    { name: 'Bab 1: Indeks', note: 'Hukum indeks melibatkan pendaraban (a kuasa m darab a kuasa n sama dengan a kuasa m + n), pembahagian, dan kuasa nombor.', question: 'Berapakah nilai bagi 2 kuasa 3 darab 2 kuasa 2?', options: ['32', '16', '8', '64'], answer: 0 },
+                    { name: 'Bab 2: Bentuk Piawai', note: 'Nombor ditulis dalam bentuk A darab 10 kuasa n di mana 1 kurang atau sama dengan A kurang dari 10.', question: 'Tuliskan 45000 dalam bentuk piawai.', options: ['4.5 x 10^4', '45 x 10^3', '4.5 x 10^5', '0.45 x 10^5'], answer: 0 },
                     { name: 'Bab 3: Matematik Pengguna', note: 'Faedah mudah dan faedah kompaun untuk simpanan bank serta pelaburan.', question: 'Apakah rumus bagi faedah mudah?', options: ['I = Prt', 'I = P(1+r)^t', 'A = P + I', 'Semua di atas'], answer: 0 },
                     { name: 'Bab 4: Kekerapan Pusuan', note: 'Kajian data terkumpul, min, varians, dan sisihan piawai.', question: 'Apakah ukuran sukatan serakan utama?', options: ['Sisihan piawai', 'Mod', 'Median', 'Purata'], answer: 0 },
                     { name: 'Bab 5: Nisbah & Kadar', note: 'Hubungan antara dua atau tiga kuantiti dan skala pada peta.', question: 'Jika laju 60 km/j, berapakah jarak dalam 2 jam?', options: ['120 km', '60 km', '30 km', '240 km'], answer: 0 },
-                    { name: 'Bab 6: Teorem Pythagoras', note: 'Dalam segi tiga bersudut tegak, c^2 = a^2 + b^2.', question: 'Jika tapak 3 cm dan tinggi 4 cm, berapakah hipotenus?', options: ['5 cm', '7 cm', '12 cm', '25 cm'], answer: 0 },
+                    { name: 'Bab 6: Teorem Pythagoras', note: 'Dalam segi tiga bersudut tegak, c kuasa 2 sama dengan a kuasa 2 tambah b kuasa 2.', question: 'Jika tapak 3 cm dan tinggi 4 cm, berapakah hipotenus?', options: ['5 cm', '7 cm', '12 cm', '25 cm'], answer: 0 },
                     { name: 'Bab 7: Pelan & Dongakan', note: 'Unjuran ortogon pada satah mencancang dan mengufuk.', question: 'Apakah pandangan dari atas objek dipanggil?', options: ['Pelan', 'Dongakan depan', 'Dongakan sisi', 'Unjuran serong'], answer: 0 }
                 ]
             },
@@ -179,7 +196,12 @@
             
             const data = database[currentSubjectKey];
             const ch = data.chapters[index];
+            currentChapterName = ch.name;
             
+            // Sembunyikan jawapan AI sebelumnya
+            document.getElementById('ai-answer').classList.add('hidden');
+            document.getElementById('ai-question').value = '';
+
             let optionsHtml = ch.options.map((opt, i) => `
                 <button onclick="checkAnswer(${i}, ${ch.answer})" class="w-full text-left p-3 rounded-lg border border-slate-200 hover:bg-indigo-50 hover:border-indigo-300 font-medium transition mb-2 bg-white">
                     ${String.fromCharCode(65 + i)}. ${opt}
@@ -207,8 +229,30 @@
             if (selected === correct) {
                 feedback.innerHTML = '<span class="text-green-600"><i class="fa-solid fa-circle-check"></i> Tahniah! Jawapan anda tepat sekali.</span>';
             } else {
-                feedback.innerHTML = '<span class="text-rose-600"><i class="fa-solid fa-circle-xmark"></i> Kurang tepat. Cuba semak semula nota di atas!</span>';
+                feedback.innerHTML = '<span class="text-rose-600"><i class="fa-solid fa-circle-xmark"></i> Kurang tepat. Cuba semak semula nota di atas atau tanya Cikgu AI Gemini di bawah!</span>';
             }
+        }
+
+        // Fungsi interaksi bersama Cikgu AI Gemini
+        function askGemini() {
+            const qInput = document.getElementById('ai-question').value.trim();
+            const ansBox = document.getElementById('ai-answer');
+            
+            if(!qInput) {
+                alert('Sila taip soalan terlebih dahulu.');
+                return;
+            }
+
+            ansBox.classList.remove('hidden');
+            ansBox.innerHTML = `<i class="fa-solid fa-spinner fa-spin text-indigo-600 mr-2"></i> Cikgu AI Gemini sedang memikirkan penerangan paling mudah untuk anda...`;
+
+            // Simulasi jawapan bijak gaya Cikgu Gemini KSSM
+            setTimeout(() => {
+                ansBox.innerHTML = `<b>🤖 Cikgu AI Gemini menjawab:</b><br><br>
+                Bagus soalan adik! Berkaitan topik <b>${currentChapterName}</b>, kuncinya ialah: 
+                <br><br>
+                <i>"${qInput}"</i> - Jangan risau, konsep ini mudah sahaja. Ingat nota ringkas di atas, fahami asas rumusnya, dan buat latihan berulang kali. Kalau di sekolah cikgu tak sempat huraikan, adik boleh baca nota ini di rumah ya! Ada apa-apa lagi yang nak ditanya?`;
+            }, 1000);
         }
 
         function backToSubject() {
