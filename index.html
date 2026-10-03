@@ -3,15 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CerdikT3 - Platform Pembelajaran Tingkatan 3</title>
+    <title>CerdikT3 - Platform Pembelajaran Tingkatan 3 + Gemini AI</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- SDK Rasmi Google Generative AI (Gemini) -->
+    <script type="importmap">
+      {
+        "imports": {
+          "@google/genai": "https://esm.run/@google/genai"
+        }
+      }
+    </script>
 </head>
 <body class="bg-slate-50 font-sans text-slate-800">
     <header class="bg-indigo-600 text-white shadow-md sticky top-0 z-50">
         <div class="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
             <h1 class="text-xl font-bold flex items-center gap-2 cursor-pointer" onclick="showHome()"><i class="fa-solid fa-graduation-cap"></i> CerdikT3</h1>
-            <span class="text-xs bg-indigo-500 px-3 py-1 rounded-full">KSSM T3 + Suara AI Gemini</span>
+            <span class="text-xs bg-indigo-500 px-3 py-1 rounded-full"><i class="fa-solid fa-wand-magic-sparkles"></i> Dikuasakan oleh Gemini AI</span>
         </div>
     </header>
 
@@ -20,15 +28,15 @@
         <div id="home-view">
             <section class="text-center mb-8">
                 <h2 class="text-2xl font-bold mb-2">Selamat Datang ke CerdikT3!</h2>
-                <p class="text-slate-600">Pilih subjek di bawah untuk ulang kaji bab buku teks KSSM di rumah.</p>
+                <p class="text-slate-600">Platform ulang kaji bijak Tingkatan 3 KSSM. Pilih subjek atau terus bersembang dengan Cikgu AI Gemini di bawah!</p>
             </section>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
                 <div onclick="openSubject('matematik')" class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 flex items-center gap-4 cursor-pointer hover:border-blue-400 transition">
                     <div class="bg-blue-100 text-blue-600 p-4 rounded-lg text-xl"><i class="fa-solid fa-calculator"></i></div>
                     <div>
                         <h3 class="font-bold text-lg">Matematik T3</h3>
-                        <p class="text-sm text-slate-500">Bab 1 hingga Bab 7</p>
+                        <p class="text-sm text-slate-500">Nota & Latihan Bab</p>
                     </div>
                 </div>
 
@@ -36,7 +44,7 @@
                     <div class="bg-green-100 text-green-600 p-4 rounded-lg text-xl"><i class="fa-solid fa-atom"></i></div>
                     <div>
                         <h3 class="font-bold text-lg">Sains T3</h3>
-                        <p class="text-sm text-slate-500">Bab 1 hingga Bab 9</p>
+                        <p class="text-sm text-slate-500">Nota & Latihan Bab</p>
                     </div>
                 </div>
 
@@ -44,7 +52,7 @@
                     <div class="bg-amber-100 text-amber-600 p-4 rounded-lg text-xl"><i class="fa-solid fa-landmark"></i></div>
                     <div>
                         <h3 class="font-bold text-lg">Sejarah T3</h3>
-                        <p class="text-sm text-slate-500">Bab 1 hingga Bab 6</p>
+                        <p class="text-sm text-slate-500">Nota & Latihan Bab</p>
                     </div>
                 </div>
 
@@ -52,7 +60,7 @@
                     <div class="bg-rose-100 text-rose-600 p-4 rounded-lg text-xl"><i class="fa-solid fa-book-open"></i></div>
                     <div>
                         <h3 class="font-bold text-lg">Bahasa Melayu</h3>
-                        <p class="text-sm text-slate-500">Tatabahasa, Karangan & Komsas</p>
+                        <p class="text-sm text-slate-500">Tatabahasa & Karangan</p>
                     </div>
                 </div>
 
@@ -62,6 +70,23 @@
                         <h3 class="font-bold text-lg">English T3 (Support BM)</h3>
                         <p class="text-sm text-slate-500">Literature & Novel dengan panduan Bahasa Melayu</p>
                     </div>
+                </div>
+            </div>
+
+            <!-- KOTAK UTAMA TANYA GEMINI AI SEBENAR DI LAMAN UTAMA -->
+            <div class="bg-gradient-to-r from-indigo-900 to-purple-900 text-white p-6 rounded-2xl shadow-lg">
+                <h3 class="font-bold text-xl mb-2 flex items-center gap-2">
+                    <i class="fa-solid fa-robot text-indigo-400"></i> Tanya Cikgu AI Gemini Apa Sahaja!
+                </h3>
+                <p class="text-sm text-indigo-200 mb-4">Adik ada soalan kerja sekolah, tak faham bab tertentu, atau nak tahu fakta pelajaran? Taip atau cakap terus di sini:</p>
+                <div class="flex gap-2 mb-3">
+                    <input type="text" id="global-ai-question" placeholder="Cth: Cikgu, tolong terangkan bagaimana proses respirasi berlaku..." class="flex-1 px-4 py-3 rounded-xl text-sm text-slate-800 focus:outline-none bg-white">
+                    <button onclick="askMainGemini()" class="bg-indigo-500 hover:bg-indigo-600 text-white px-6 py-3 rounded-xl font-medium text-sm transition flex items-center gap-2 shadow-sm">
+                        <i class="fa-solid fa-paper-plane"></i> Hantar
+                    </button>
+                </div>
+                <div id="global-ai-answer" class="bg-white/15 backdrop-blur-md p-4 rounded-xl border border-white/20 text-sm text-indigo-100 hidden">
+                    <!-- Jawapan Gemini Sebenar -->
                 </div>
             </div>
         </div>
@@ -77,7 +102,7 @@
         <!-- LAMAN NOTA & KUIZ BAB -->
         <div id="chapter-view" class="hidden">
             <div class="flex justify-between items-center mb-4">
-                <button onclick="backToSubject()" class="mb-4 text-sm bg-slate-200 hover:bg-slate-300 px-4 py-2 rounded-lg font-medium transition flex items-center gap-2">
+                <button onclick="backToSubject()" class="text-sm bg-slate-200 hover:bg-slate-300 px-4 py-2 rounded-lg font-medium transition flex items-center gap-2">
                     <i class="fa-solid fa-arrow-left"></i> Kembali ke Senarai Bab
                 </button>
                 <button onclick="speakFullContent()" class="text-sm bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg font-medium transition flex items-center gap-2 shadow-sm">
@@ -86,30 +111,48 @@
             </div>
             
             <div id="chapter-content" class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 mb-6"></div>
-            
-            <!-- KOTAK INTERAKTIF SUARA GEMINI AI -->
-            <div class="bg-gradient-to-r from-indigo-50 to-purple-50 p-6 rounded-xl border border-indigo-100 shadow-sm">
-                <h3 class="font-bold text-indigo-900 mb-2 flex items-center gap-2">
-                    <i class="fa-solid fa-microphone-lines text-indigo-600"></i> Tanya Cikgu AI Gemini (Guna Suara)
-                </h3>
-                <p class="text-sm text-slate-600 mb-4">Tak perlu taip! Tekan butang mikrofon di bawah dan cakap soalan adik. Cikgu AI akan jawab dan bacakan terus untuk adik:</p>
-                
-                <div class="flex gap-2 mb-3">
-                    <input type="text" id="ai-question" placeholder="Tekan butang mikrofon atau taip soalan di sini..." class="flex-1 px-4 py-2 border border-slate-300 rounded-lg text-sm focus:outline-none focus:border-indigo-500 bg-white">
-                    <button onclick="startVoiceInput()" id="mic-btn" class="bg-rose-500 hover:bg-rose-600 text-white px-4 py-2 rounded-lg font-medium text-sm transition flex items-center gap-2 shadow-sm" title="Cakap">
-                        <i class="fa-solid fa-microphone"></i> Cakap
-                    </button>
-                    <button onclick="askRealGemini()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-5 py-2 rounded-lg font-medium text-sm transition flex items-center gap-2">
-                        Tanya
-                    </button>
-                </div>
-                
-                <div id="ai-answer" class="bg-white p-4 rounded-lg border border-slate-200 text-sm text-slate-700 hidden">
-                    <!-- Jawapan dan suara AI -->
-                </div>
-            </div>
         </div>
     </main>
+
+    <script type="module">
+        import { GoogleGenAI } from "@google/genai";
+
+        const ai = new GoogleGenAI({ apiKey: "AQ.Ab8RN6KWJxxaAzzt62-7D1EKm6qOpXEWX2u2TWXgrSMHgJeWQ" });
+
+        window.askMainGemini = async function() {
+            const qInput = document.getElementById('global-ai-question').value.trim();
+            const ansBox = document.getElementById('global-ai-answer');
+            
+            if(!qInput) {
+                alert('Sila taip soalan terlebih dahulu.');
+                return;
+            }
+
+            ansBox.classList.remove('hidden');
+            ansBox.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-2"></i> Cikgu AI Gemini sedang menyiap jawapan terperinci untuk adik...`;
+
+            try {
+                const response = await ai.models.generateContent({
+                    model: 'gemini-2.5-flash',
+                    contents: `Bertindak sebagai Cikgu sekolah menengah Malaysia yang penyayang, bijak, dan memberi penerangan lengkap dalam Bahasa Melayu yang mesra untuk murid Tingkatan 3 KSSM. Soalan murid: ${qInput}`,
+                });
+
+                const replyText = response.text || "Maaf, tiada respons diterima.";
+                ansBox.innerHTML = `<b>🤖 Cikgu AI Gemini:</b><br><br>${replyText.replace(/\n/g, '<br>')}`;
+
+                if ('speechSynthesis' in window) {
+                    window.speechSynthesis.cancel();
+                    let utterance = new SpeechSynthesisUtterance(replyText.replace(/[*#_]/g, ''));
+                    utterance.lang = 'ms-MY';
+                    utterance.rate = 0.9;
+                    window.speechSynthesis.speak(utterance);
+                }
+
+            } catch (error) {
+                ansBox.innerHTML = `Maaf, terdapat ralat sambungan ke pelayan Gemini. Sila cuba sebentar lagi.`;
+            }
+        };
+    </script>
 
     <script>
         let currentSubjectKey = '';
@@ -211,9 +254,6 @@
             currentChapterName = ch.name;
             fullSpeakText = `${ch.name}. Nota ringkas: ${ch.note}. Soalan latihan: ${ch.question}`;
 
-            document.getElementById('ai-answer').classList.add('hidden');
-            document.getElementById('ai-question').value = '';
-
             let optionsHtml = ch.options.map((opt, i) => `
                 <button onclick="checkAnswer(${i}, ${ch.answer})" class="w-full text-left p-3 rounded-lg border border-slate-200 hover:bg-indigo-50 hover:border-indigo-300 font-medium transition mb-2 bg-white">
                     ${String.fromCharCode(65 + i)}. ${opt}
@@ -248,40 +288,6 @@
             }
         }
 
-        // Fungsi Bercakap Guna Suara (Speech-to-Text untuk murid)
-        function startVoiceInput() {
-            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-            if (!SpeechRecognition) {
-                alert('Maaf, pelayar web telefon anda tidak menyokong pengecaman suara. Sila taip soalan.');
-                return;
-            }
-
-            const recognition = new SpeechRecognition();
-            recognition.lang = 'ms-MY'; // Bahasa Melayu
-            recognition.interimResults = false;
-            recognition.maxAlternatives = 1;
-
-            const micBtn = document.getElementById('mic-btn');
-            micBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Mendengar...`;
-            micBtn.classList.add('bg-amber-500');
-
-            recognition.start();
-
-            recognition.onresult = function(event) {
-                const speechToText = event.results[0][0].transcript;
-                document.getElementById('ai-question').value = speechToText;
-                micBtn.innerHTML = `<i class="fa-solid fa-microphone"></i> Cakap`;
-                micBtn.classList.remove('bg-amber-500');
-                askRealGemini(); // Automatik hantar ke Gemini
-            };
-
-            recognition.onerror = function() {
-                alert('Tidak dapat mendengar suara. Sila cuba sekali lagi.');
-                micBtn.innerHTML = `<i class="fa-solid fa-microphone"></i> Cakap`;
-                micBtn.classList.remove('bg-amber-500');
-            };
-        }
-
         function checkAnswer(selected, correct) {
             const feedback = document.getElementById('quiz-feedback');
             if (selected === correct) {
@@ -289,37 +295,6 @@
             } else {
                 feedback.innerHTML = '<span class="text-rose-600"><i class="fa-solid fa-circle-xmark"></i> Kurang tepat. Cuba semak semula nota di atas!</span>';
             }
-        }
-
-        // Gemini AI Menjawab + Auto Baca Jawapan Guna Suara
-        function askRealGemini() {
-            const qInput = document.getElementById('ai-question').value.trim();
-            const ansBox = document.getElementById('ai-answer');
-            
-            if(!qInput) {
-                alert('Sila cakap atau taip soalan terlebih dahulu.');
-                return;
-            }
-
-            ansBox.classList.remove('hidden');
-            ansBox.innerHTML = `<i class="fa-solid fa-spinner fa-spin text-indigo-600 mr-2"></i> Cikgu AI Gemini sedang menerangkan...`;
-
-            setTimeout(() => {
-                const replyText = `Bagus soalan adik. Untuk topik ${currentChapterName}, konsepnya ialah: ${qInput} adalah amat penting difahami mengikut buku teks KSSM Tingkatan 3. Rujuk nota di atas, fahami asasnya, dan adik pasti boleh jawab peperiksaan dengan cemerlang.`;
-                
-                ansBox.innerHTML = `<b>🤖 Cikgu AI Gemini:</b><br><br>
-                <i>"${qInput}"</i><br><br>
-                <b>Penerangan:</b> ${replyText}`;
-
-                // Auto baca jawapan AI menggunakan Suara AI
-                if ('speechSynthesis' in window) {
-                    window.speechSynthesis.cancel();
-                    let utterance = new SpeechSynthesisUtterance(replyText);
-                    utterance.lang = 'ms-MY';
-                    utterance.rate = 0.9;
-                    window.speechSynthesis.speak(utterance);
-                }
-            }, 800);
         }
 
         function backToSubject() {
