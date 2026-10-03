@@ -9,51 +9,124 @@
 </head>
 <body class="bg-slate-50 font-sans text-slate-800">
     <header class="bg-indigo-600 text-white shadow-md sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-            <h1 class="text-xl font-bold flex items-center gap-2"><i class="fa-solid fa-graduation-cap"></i> CerdikT3</h1>
+        <div class="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
+            <h1 class="text-xl font-bold flex items-center gap-2 cursor-pointer" onclick="showHome()"><i class="fa-solid fa-graduation-cap"></i> CerdikT3</h1>
             <span class="text-xs bg-indigo-500 px-3 py-1 rounded-full">KSSM Tingkatan 3</span>
         </div>
     </header>
 
     <main class="max-w-4xl mx-auto px-4 py-8">
-        <section class="text-center mb-8">
-            <h2 class="text-2xl font-bold mb-2">Selamat Datang ke CerdikT3!</h2>
-            <p class="text-slate-600">Ulang kaji subjek Tingkatan 3 mengikut silibus buku teks KPM dengan mudah di rumah.</p>
-        </section>
+        <!-- LAMAN UTAMA -->
+        <div id="home-view">
+            <section class="text-center mb-8">
+                <h2 class="text-2xl font-bold mb-2">Selamat Datang ke CerdikT3!</h2>
+                <p class="text-slate-600">Ulang kaji subjek Tingkatan 3 mengikut silibus buku teks KPM dengan mudah di rumah.</p>
+            </section>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 flex items-center gap-4">
-                <div class="bg-blue-100 text-blue-600 p-4 rounded-lg text-xl"><i class="fa-solid fa-calculator"></i></div>
-                <div>
-                    <h3 class="font-bold text-lg">Matematik T3</h3>
-                    <p class="text-sm text-slate-500">Indeks, Pola, S&R, Graf</p>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div onclick="openSubject('Matematik T3', 'Indeks, Bentuk Piawai, Matematik Pengguna, Kekerapan Pusuan, Nisbah & Graf Gerakan.', 'blue')" class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 flex items-center gap-4 cursor-pointer hover:border-blue-400 transition">
+                    <div class="bg-blue-100 text-blue-600 p-4 rounded-lg text-xl"><i class="fa-solid fa-calculator"></i></div>
+                    <div>
+                        <h3 class="font-bold text-lg">Matematik T3</h3>
+                        <p class="text-sm text-slate-500">Indeks, Pola, S&R, Graf</p>
+                    </div>
                 </div>
-            </div>
 
-            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 flex items-center gap-4">
-                <div class="bg-green-100 text-green-600 p-4 rounded-lg text-xl"><i class="fa-solid fa-atom"></i></div>
-                <div>
-                    <h3 class="font-bold text-lg">Sains T3</h3>
-                    <p class="text-sm text-slate-500">Rangsangan, Respirasi, Tenaga</p>
+                <div onclick="openSubject('Sains T3', 'Rangsangan & Gerak Balas, Respirasi, Kitaran Nutrien, Kesihatan Manusia & Tenaga Nuklear.', 'green')" class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 flex items-center gap-4 cursor-pointer hover:border-green-400 transition">
+                    <div class="bg-green-100 text-green-600 p-4 rounded-lg text-xl"><i class="fa-solid fa-atom"></i></div>
+                    <div>
+                        <h3 class="font-bold text-lg">Sains T3</h3>
+                        <p class="text-sm text-slate-500">Rangsangan, Respirasi, Tenaga</p>
+                    </div>
                 </div>
-            </div>
 
-            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 flex items-center gap-4">
-                <div class="bg-amber-100 text-amber-600 p-4 rounded-lg text-xl"><i class="fa-solid fa-landmark"></i></div>
-                <div>
-                    <h3 class="font-bold text-lg">Sejarah T3</h3>
-                    <p class="text-sm text-slate-500">Kuasa Luar & Nasionalisme</p>
+                <div onclick="openSubject('Sejarah T3', 'Kedatangan Kuasa Luar, Pentadbiran British, Penentangan Masyarakat Tempatan & Nasionalisme.', 'amber')" class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 flex items-center gap-4 cursor-pointer hover:border-amber-400 transition">
+                    <div class="bg-amber-100 text-amber-600 p-4 rounded-lg text-xl"><i class="fa-solid fa-landmark"></i></div>
+                    <div>
+                        <h3 class="font-bold text-lg">Sejarah T3</h3>
+                        <p class="text-sm text-slate-500">Kuasa Luar & Nasionalisme</p>
+                    </div>
                 </div>
-            </div>
 
-            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 flex items-center gap-4">
-                <div class="bg-rose-100 text-rose-600 p-4 rounded-lg text-xl"><i class="fa-solid fa-book-open"></i></div>
-                <div>
-                    <h3 class="font-bold text-lg">Bahasa Melayu</h3>
-                    <p class="text-sm text-slate-500">Tatabahasa & Karangan</p>
+                <div onclick="openSubject('Bahasa Melayu', 'Tatabahasa, Penulisan Karangan (Bahagian A, B, C), Pemahaman Komsas & Novel.', 'rose')" class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 flex items-center gap-4 cursor-pointer hover:border-rose-400 transition">
+                    <div class="bg-rose-100 text-rose-600 p-4 rounded-lg text-xl"><i class="fa-solid fa-book-open"></i></div>
+                    <div>
+                        <h3 class="font-bold text-lg">Bahasa Melayu</h3>
+                        <p class="text-sm text-slate-500">Tatabahasa & Karangan</p>
+                    </div>
+                </div>
+
+                <div onclick="openSubject('English T3 (Support BM)', 'Literature Components, Novel (The Interloper), Directed Writing & Grammar. Penerangan disediakan dalam Bahasa Melayu khas untuk bantu pelajar yang kurang faham English.', 'purple')" class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 flex items-center gap-4 cursor-pointer hover:border-purple-400 transition sm:col-span-2">
+                    <div class="bg-purple-100 text-purple-600 p-4 rounded-lg text-xl"><i class="fa-solid fa-language"></i></div>
+                    <div>
+                        <h3 class="font-bold text-lg">English T3 (Support BM)</h3>
+                        <p class="text-sm text-slate-500">Novel, Literature & Writing dengan panduan Bahasa Melayu</p>
+                    </div>
                 </div>
             </div>
         </div>
+
+        <!-- LAMAN SUBJEK -->
+        <div id="subject-view" class="hidden">
+            <div class="flex justify-between items-center mb-4">
+                <button onclick="showHome()" class="text-sm bg-slate-200 hover:bg-slate-300 px-4 py-2 rounded-lg font-medium transition flex items-center gap-2">
+                    <i class="fa-solid fa-arrow-left"></i> Menu Utama
+                </button>
+                <button onclick="speakText()" class="text-sm bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg font-medium transition flex items-center gap-2 shadow-sm">
+                    <i class="fa-solid fa-volume-high"></i> Dengar Suara AI
+                </button>
+            </div>
+            <div id="subject-content" class="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
+                <!-- Kandungan -->
+            </div>
+        </div>
     </main>
+
+    <script>
+        let currentTextToSpeak = "";
+
+        function openSubject(title, desc, color) {
+            document.getElementById('home-view').classList.add('hidden');
+            document.getElementById('subject-view').classList.remove('hidden');
+            
+            currentTextToSpeak = `${title}. Penerangan: ${desc}. Sila ulangkaji dengan teliti di rumah.`;
+
+            const content = document.getElementById('subject-content');
+            content.innerHTML = `
+                <h2 class="text-2xl font-bold mb-3 text-${color}-600">${title}</h2>
+                <p class="text-slate-600 mb-4">${desc}</p>
+                <hr class="my-4 border-slate-100">
+                <h3 class="font-bold text-lg mb-2">📚 Nota & Panduan Belajar:</h3>
+                <ul class="list-disc list-inside space-y-2 text-slate-700 mb-6">
+                    <li>Penerangan ringkas dan mudah faham mengikut topik buku teks KSSM.</li>
+                    <li>Sesuai diulang kaji di rumah bagi murid yang tertinggal di sekolah.</li>
+                    <li>Gunakan butang <b>"Dengar Suara AI"</b> di atas jika mahu telefon membacakan nota ini untuk anda.</li>
+                </ul>
+                <div class="bg-indigo-50 p-4 rounded-lg border border-indigo-100 text-indigo-800 text-sm">
+                    💡 <b>Tip Cikgu:</b> Tekan butang suara di atas kalau pelajar lebih selesa mendengar penerangan lisan!
+                </div>
+            `;
+            window.scrollTo(0, 0);
+        }
+
+        function showHome() {
+            window.speechSynthesis.cancel();
+            document.getElementById('subject-view').classList.add('hidden');
+            document.getElementById('home-view').classList.remove('hidden');
+            window.scrollTo(0, 0);
+        }
+
+        function speakText() {
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+                let utterance = new SpeechSynthesisUtterance(currentTextToSpeak);
+                utterance.lang = 'ms-MY';
+                utterance.rate = 0.9;
+                window.speechSynthesis.speak(utterance);
+            } else {
+                alert('Maaf, peranti anda tidak menyokong fungsi suara AI.');
+            }
+        }
+    </script>
 </body>
 </html>
