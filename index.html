@@ -20,47 +20,47 @@
         <div id="home-view">
             <section class="text-center mb-8">
                 <h2 class="text-2xl font-bold mb-2">Selamat Datang ke CerdikT3!</h2>
-                <p class="text-slate-600">Ulang kaji subjek Tingkatan 3 mengikut silibus buku teks KPM dengan mudah di rumah.</p>
+                <p class="text-slate-600">Nota lengkap mengikut Bab Buku Teks KSSM untuk ulang kaji di rumah.</p>
             </section>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                <div onclick="openSubject('Matematik T3', 'Indeks, Bentuk Piawai, Matematik Pengguna, Kekerapan Pusuan, Nisbah & Graf Gerakan.', 'blue')" class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 flex items-center gap-4 cursor-pointer hover:border-blue-400 transition">
+                <div onclick="openSubject('Matematik T3', 'matematik')" class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 flex items-center gap-4 cursor-pointer hover:border-blue-400 transition">
                     <div class="bg-blue-100 text-blue-600 p-4 rounded-lg text-xl"><i class="fa-solid fa-calculator"></i></div>
                     <div>
                         <h3 class="font-bold text-lg">Matematik T3</h3>
-                        <p class="text-sm text-slate-500">Indeks, Pola, S&R, Graf</p>
+                        <p class="text-sm text-slate-500">Bab 1 hingga Bab 7 (Buku Teks)</p>
                     </div>
                 </div>
 
-                <div onclick="openSubject('Sains T3', 'Rangsangan & Gerak Balas, Respirasi, Kitaran Nutrien, Kesihatan Manusia & Tenaga Nuklear.', 'green')" class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 flex items-center gap-4 cursor-pointer hover:border-green-400 transition">
+                <div onclick="openSubject('Sains T3', 'sains')" class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 flex items-center gap-4 cursor-pointer hover:border-green-400 transition">
                     <div class="bg-green-100 text-green-600 p-4 rounded-lg text-xl"><i class="fa-solid fa-atom"></i></div>
                     <div>
                         <h3 class="font-bold text-lg">Sains T3</h3>
-                        <p class="text-sm text-slate-500">Rangsangan, Respirasi, Tenaga</p>
+                        <p class="text-sm text-slate-500">Bab 1 hingga Bab 10 (Buku Teks)</p>
                     </div>
                 </div>
 
-                <div onclick="openSubject('Sejarah T3', 'Kedatangan Kuasa Luar, Pentadbiran British, Penentangan Masyarakat Tempatan & Nasionalisme.', 'amber')" class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 flex items-center gap-4 cursor-pointer hover:border-amber-400 transition">
+                <div onclick="openSubject('Sejarah T3', 'sejarah')" class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 flex items-center gap-4 cursor-pointer hover:border-amber-400 transition">
                     <div class="bg-amber-100 text-amber-600 p-4 rounded-lg text-xl"><i class="fa-solid fa-landmark"></i></div>
                     <div>
                         <h3 class="font-bold text-lg">Sejarah T3</h3>
-                        <p class="text-sm text-slate-500">Kuasa Luar & Nasionalisme</p>
+                        <p class="text-sm text-slate-500">Bab 1 hingga Bab 6 (Buku Teks)</p>
                     </div>
                 </div>
 
-                <div onclick="openSubject('Bahasa Melayu', 'Tatabahasa, Penulisan Karangan (Bahagian A, B, C), Pemahaman Komsas & Novel.', 'rose')" class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 flex items-center gap-4 cursor-pointer hover:border-rose-400 transition">
+                <div onclick="openSubject('Bahasa Melayu', 'bm')" class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 flex items-center gap-4 cursor-pointer hover:border-rose-400 transition">
                     <div class="bg-rose-100 text-rose-600 p-4 rounded-lg text-xl"><i class="fa-solid fa-book-open"></i></div>
                     <div>
                         <h3 class="font-bold text-lg">Bahasa Melayu</h3>
-                        <p class="text-sm text-slate-500">Tatabahasa & Karangan</p>
+                        <p class="text-sm text-slate-500">Tatabahasa, Karangan & Komsas</p>
                     </div>
                 </div>
 
-                <div onclick="openSubject('English T3 (Support BM)', 'Literature Components, Novel (The Interloper), Directed Writing & Grammar. Penerangan disediakan dalam Bahasa Melayu khas untuk bantu pelajar yang kurang faham English.', 'purple')" class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 flex items-center gap-4 cursor-pointer hover:border-purple-400 transition sm:col-span-2">
+                <div onclick="openSubject('English T3 (Support BM)', 'english')" class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 flex items-center gap-4 cursor-pointer hover:border-purple-400 transition sm:col-span-2">
                     <div class="bg-purple-100 text-purple-600 p-4 rounded-lg text-xl"><i class="fa-solid fa-language"></i></div>
                     <div>
                         <h3 class="font-bold text-lg">English T3 (Support BM)</h3>
-                        <p class="text-sm text-slate-500">Novel, Literature & Writing dengan panduan Bahasa Melayu</p>
+                        <p class="text-sm text-slate-500">Literature, Novel & Writing (Penerangan Bahasa Melayu)</p>
                     </div>
                 </div>
             </div>
@@ -77,7 +77,7 @@
                 </button>
             </div>
             <div id="subject-content" class="bg-white p-6 rounded-xl shadow-sm border border-slate-100">
-                <!-- Kandungan -->
+                <!-- Kandungan Bab Buku Teks -->
             </div>
         </div>
     </main>
@@ -85,25 +85,90 @@
     <script>
         let currentTextToSpeak = "";
 
-        function openSubject(title, desc, color) {
+        const database = {
+            'matematik': {
+                title: 'Matematik Tingkatan 3',
+                color: 'blue',
+                chapters: [
+                    'Bab 1: Indeks (Hukum Indeks, Pendaraban & Pembahagian Nombor Indeks)',
+                    'Bab 2: Bentuk Piawai (Angka Bererti, Operasi Asas Bentuk Piawai)',
+                    'Bab 3: Matematik Pengguna - Simpanan, Pelaburan, Kredit & Hutang',
+                    'Bab 4: Kekerapan Pusuan & Sukatan Serakan (Min, Varians, Sisihan Piawai)',
+                    'Bab 5: Nisbah, Kadar & Kadaran (Kadar Berjodohan, Skala & Peta)',
+                    'Bab 6: Teorem Pythagoras (Sisi Segi Tiga Bersudut Tegak)',
+                    'Bab 7: Pelan & Dongakan (Unjuran Ortogon, Pelan Mendatar & Serong)'
+                ]
+            },
+            'sains': {
+                title: 'Sains Tingkatan 3',
+                color: 'green',
+                chapters: [
+                    'Bab 1: Rangsangan & Gerak Balas (Sistem Saraf Manusia, Deria Tumbuhan)',
+                    'Bab 2: Respirasi (Sistem Respirasi Manusia, Pertukaran Gas, Kesihatan Paru-paru)',
+                    'Bab 3: Kitaran Nutrien dalam Ekosistem (Kitar Karbon, Kitar Nitrogen)',
+                    'Bab 4: Kebyakturan & Kesihatan (Penyakit Berjangkit & Tidak Berjangkit)',
+                    'Bab 5: Kekunci & Pencemaran Alam (Sisa Domestik, Pemeliharaan Alam)',
+                    'Bab 6: Keelektrikan & Kemagnetan (Arus, Voltan, Rintangan, Transformer)',
+                    'Bab 7: Tenaga Tenaga & Kuasa (Tenaga Boleh Dibaharui & Kecekapan Tenaga)',
+                    'Bab 8: Kekuatan & Tekanan (Tekanan Gas, Tekanan Sanga, Prinsip Pascal)',
+                    'Bab 9: Bumi & Angkasa (Satelit, Stesen Angkasa, Jarak di Angkasa Lepas)'
+                ]
+            },
+            'sejarah': {
+                title: 'Sejarah Tingkatan 3',
+                color: 'amber',
+                chapters: [
+                    'Bab 1: Kedatangan Kuasa Luar (Strategi British, Belanda & Sepanyol di Negara Kita)',
+                    'Bab 2: Pentadbiran British di Tanah Melayu, Sabah & Sarawak (Sistem Residen, Negeri Melayu Bersekutu)',
+                    'Bab 3: Kesan Pentadbiran British terhadap Ekonomi & Sosial',
+                    'Bab 4: Penentangan Masyarakat Tempatan terhadap British (Tok Janggut, Rentap, Mat Salleh)',
+                    'Bab 5: Gerakan Nasionalisme sehingga Perang Dunia (Zaman Kesedaran Bangsa)',
+                    'Bab 6: Kesan Pendudukan Jepun di Negara Kita (Dasar Jepun & Reaksi Penduduk)'
+                ]
+            },
+            'bm': {
+                title: 'Bahasa Melayu Tingkatan 3',
+                color: 'rose',
+                chapters: [
+                    '1. Tatabahasa: Morfologi (Kata Nama, Kata Kerja, Kata Adjektif) & Sintaksis (Ayat Dasar & Pola)',
+                    '2. Penulisan Karangan Bahagian A: Respon Terhad (Graf, Poster, Maklumat Bergambar)',
+                    '3. Penulisan Karangan Bahagian B: Karangan Berpandu (Pendapat / Syarahan / Rencana)',
+                    '4. Penulisan Karangan Bahagian C: Karangan Respon Terbuka (Novel & Cerpen)',
+                    '5. Komsas: Novel (Meniti Impian / Darah Usahawan / Bimasakti Menari) & Puisi Tradisional'
+                ]
+            },
+            'english': {
+                title: 'English Tingkatan 3 (Support BM)',
+                color: 'purple',
+                chapters: [
+                    '1. Literature Component: Poems (The Poison Tree) & Short Stories (Cheat!). [Nota: Diterangkan dlm BM untuk murid lemah]',
+                    '2. Novel Study: "The Interloper" (Character Analysis, Themes & Moral Values dlm BM)',
+                    '3. Directed Writing: Formal/Informal Letters, Reports, Articles (Panduan langkah demi langkah BM)',
+                    '4. Grammar Focus: Past Simple vs Past Continuous, Modals, Conditionals (Penerangan mudah BM)'
+                ]
+            }
+        };
+
+        function openSubject(key, dbKey) {
             document.getElementById('home-view').classList.add('hidden');
             document.getElementById('subject-view').classList.remove('hidden');
             
-            currentTextToSpeak = `${title}. Penerangan: ${desc}. Sila ulangkaji dengan teliti di rumah.`;
+            const data = database[dbKey];
+            let listHtml = data.chapters.map(ch => `<li class="p-2 bg-slate-50 rounded border border-slate-100">${ch}</li>`).join('');
+            
+            currentTextToSpeak = `${data.title}. Senarai bab dan topik mengikut buku teks adalah: ${data.chapters.join('. ')}`;
 
             const content = document.getElementById('subject-content');
             content.innerHTML = `
-                <h2 class="text-2xl font-bold mb-3 text-${color}-600">${title}</h2>
-                <p class="text-slate-600 mb-4">${desc}</p>
+                <h2 class="text-2xl font-bold mb-3 text-${data.color}-600">${data.title}</h2>
+                <p class="text-slate-600 mb-4">Berikut adalah senarai topik dan bab rasmi daripada buku teks KSSM Tingkatan 3 untuk ulang kaji murid di rumah:</p>
                 <hr class="my-4 border-slate-100">
-                <h3 class="font-bold text-lg mb-2">📚 Nota & Panduan Belajar:</h3>
-                <ul class="list-disc list-inside space-y-2 text-slate-700 mb-6">
-                    <li>Penerangan ringkas dan mudah faham mengikut topik buku teks KSSM.</li>
-                    <li>Sesuai diulang kaji di rumah bagi murid yang tertinggal di sekolah.</li>
-                    <li>Gunakan butang <b>"Dengar Suara AI"</b> di atas jika mahu telefon membacakan nota ini untuk anda.</li>
+                <h3 class="font-bold text-lg mb-3">📖 Senarai Bab / Topik Buku Teks:</h3>
+                <ul class="space-y-2 text-slate-700 mb-6">
+                    ${listHtml}
                 </ul>
                 <div class="bg-indigo-50 p-4 rounded-lg border border-indigo-100 text-indigo-800 text-sm">
-                    💡 <b>Tip Cikgu:</b> Tekan butang suara di atas kalau pelajar lebih selesa mendengar penerangan lisan!
+                    💡 <b>Tip Cikgu:</b> Murid boleh tekan butang <b>"Dengar Suara AI"</b> di atas untuk mendengar penerangan senarai bab ini secara lisan!
                 </div>
             `;
             window.scrollTo(0, 0);
