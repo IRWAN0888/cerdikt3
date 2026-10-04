@@ -12,7 +12,7 @@
     <header class="bg-indigo-600 text-white shadow-md sticky top-0 z-50">
         <div class="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
             <h1 class="text-xl font-bold flex items-center gap-2 cursor-pointer" onclick="showHome()"><i class="fa-solid fa-house-chimney-user"></i> CerdikT3</h1>
-            <span class="text-xs bg-indigo-500 px-3 py-1 rounded-full"><i class="fa-solid fa-chalkboard-user"></i> Semua Bab KSSM T3</span>
+            <span class="text-xs bg-indigo-500 px-3 py-1 rounded-full"><i class="fa-solid fa-chalkboard-user"></i> Nota & Huraian Terperinci KSSM</span>
         </div>
     </header>
 
@@ -21,10 +21,10 @@
         <div id="home-view">
             <section class="text-center mb-6">
                 <h2 class="text-2xl font-bold mb-2">Kelas Cikgu Di Rumah</h2>
-                <p class="text-slate-600 mb-6">Pilih subjek di bawah untuk melihat senarai penuh kesemua bab buku teks KSSM.</p>
+                <p class="text-slate-600 mb-6">Pilih subjek di bawah untuk mula mengulang kaji nota lengkap dan terperinci setiap bab KSSM.</p>
             </section>
 
-            <!-- KOTAK CARIAN GAYA GEMINI -->
+            <!-- KOTAK CARIAN GAYA GEMINI DI LAMAN UTAMA -->
             <div class="max-w-xl mx-auto mb-8">
                 <div class="bg-white rounded-full shadow-md border border-slate-200 px-4 py-2 flex items-center gap-3">
                     <button class="w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition" title="Tambah">
@@ -33,8 +33,8 @@
                     
                     <input type="text" id="gemini-search-input" placeholder="Tanya Cikgu AI..." class="flex-1 bg-transparent border-none focus:outline-none text-slate-700 text-base placeholder-slate-400">
                     
-                    <button onclick="alert('Sila pilih subjek di bawah untuk nota lengkap setiap bab.')" class="text-slate-500 hover:text-indigo-600 p-2 transition">
-                        <i class="fa-solid fa-microphone text-lg"></i>
+                    <button onclick="startHomeVoice()" class="text-slate-500 hover:text-indigo-600 p-2 transition" title="Cakap">
+                        <i class="fa-solid fa-microphone text-lg" id="home-mic-icon"></i>
                     </button>
 
                     <button onclick="triggerGeminiSearch()" class="w-10 h-10 rounded-full bg-sky-100 hover:bg-sky-200 text-sky-600 flex items-center justify-center transition shadow-sm">
@@ -50,7 +50,7 @@
                     <div class="bg-blue-100 text-blue-600 p-4 rounded-lg text-xl"><i class="fa-solid fa-calculator"></i></div>
                     <div>
                         <h3 class="font-bold text-lg">Matematik T3</h3>
-                        <p class="text-sm text-slate-500">Bab 1 hingga Bab 7 (Lengkap)</p>
+                        <p class="text-sm text-slate-500">Nota & Jalan Kerja Lengkap 1 Persatu</p>
                     </div>
                 </div>
 
@@ -58,7 +58,7 @@
                     <div class="bg-green-100 text-green-600 p-4 rounded-lg text-xl"><i class="fa-solid fa-atom"></i></div>
                     <div>
                         <h3 class="font-bold text-lg">Sains T3</h3>
-                        <p class="text-sm text-slate-500">Bab 1 hingga Bab 9 (Lengkap)</p>
+                        <p class="text-sm text-slate-500">Nota Konsep & Eksperimen Mendalam</p>
                     </div>
                 </div>
 
@@ -66,7 +66,7 @@
                     <div class="bg-amber-100 text-amber-600 p-4 rounded-lg text-xl"><i class="fa-solid fa-landmark"></i></div>
                     <div>
                         <h3 class="font-bold text-lg">Sejarah T3</h3>
-                        <p class="text-sm text-slate-500">Bab 1 hingga Bab 6 (Lengkap)</p>
+                        <p class="text-sm text-slate-500">Nota Kronologi & Huraian Peristiwa</p>
                     </div>
                 </div>
 
@@ -74,7 +74,7 @@
                     <div class="bg-rose-100 text-rose-600 p-4 rounded-lg text-xl"><i class="fa-solid fa-book-open"></i></div>
                     <div>
                         <h3 class="font-bold text-lg">Bahasa Melayu</h3>
-                        <p class="text-sm text-slate-500">Tatabahasa & Panduan Karangan</p>
+                        <p class="text-sm text-slate-500">Nota Tatabahasa & Panduan Karangan</p>
                     </div>
                 </div>
 
@@ -96,7 +96,7 @@
             <div id="subject-content" class="bg-white p-6 rounded-xl shadow-sm border border-slate-100"></div>
         </div>
 
-        <!-- LAMAN NOTA & JALAN KERJA LENGKAP -->
+        <!-- LAMAN NOTA & HURAIAN TERPERINCI -->
         <div id="chapter-view" class="hidden">
             <div class="mb-4">
                 <button onclick="backToSubject()" class="text-sm bg-slate-200 hover:bg-slate-300 px-4 py-2 rounded-lg font-medium transition flex items-center gap-2">
@@ -106,14 +106,17 @@
             
             <div id="chapter-content" class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 mb-6"></div>
 
-            <!-- KOTAK BANTUAN DI BAWAH (YOUTUBE LINK) -->
+            <!-- KOTAK BANTUAN DI BAWAH: ADA MIKROFON & TAIP (YOUTUBE HANYA KELUAR BILA PERLU) -->
             <div class="bg-slate-900 text-white p-6 rounded-2xl shadow-lg">
                 <h3 class="font-bold text-lg mb-2 flex items-center gap-2 text-indigo-300">
-                    <i class="fa-solid fa-circle-question"></i> Masih Belum Faham Jalan Kerja Di Atas?
+                    <i class="fa-solid fa-circle-question"></i> Masih Belum Faham Nota Di Atas?
                 </h3>
-                <p class="text-xs text-slate-300 mb-4">Taip bahagian mana yang adik nak Cikgu huraikan lagi untuk dapatkan rujukan YouTube.</p>
+                <p class="text-xs text-slate-300 mb-4">Taip atau tekan butang mikrofon untuk beritahu bahagian mana yang adik nak Cikgu huraikan dengan lebih mendalam.</p>
                 <div class="flex gap-2 mb-3">
-                    <input type="text" id="followup-input" placeholder="Cth: Cikgu, saya tak faham macam mana dapat nilai tu..." class="flex-1 px-4 py-3 rounded-xl text-sm text-slate-800 focus:outline-none bg-white">
+                    <input type="text" id="followup-input" placeholder="Cth: Cikgu, tolong terangkan lagi bahagian ini..." class="flex-1 px-4 py-3 rounded-xl text-sm text-slate-800 focus:outline-none bg-white">
+                    <button onclick="startFollowupVoice()" id="mic-btn" class="bg-rose-500 hover:bg-rose-600 text-white px-4 py-3 rounded-xl font-medium text-sm transition shadow-sm" title="Cakap">
+                        <i class="fa-solid fa-microphone"></i>
+                    </button>
                     <button onclick="askFollowupAI()" class="bg-indigo-500 hover:bg-indigo-600 text-white px-5 py-3 rounded-xl font-medium text-sm transition shadow-sm">
                         Huraikan Lagi
                     </button>
@@ -130,109 +133,137 @@
             'matematik': {
                 title: 'Matematik Tingkatan 3',
                 color: 'blue',
+                boxTitle: 'Huraian Jalan Kerja & Langkah Demi Langkah:',
                 chapters: [
                     { 
                         name: 'Bab 1: Indeks', 
                         concept: 'Hukum indeks melibatkan pendaraban, pembahagian, dan kuasa nombor berindeks asas sama.',
-                        steps: `<b>Huraian & Jalan Kerja Lengkap:</b><br><br>
-                        <b>1. Pendaraban (a^m x a^n = a^(m+n)):</b> Tambah kuasa apabila asas sama.<br>
-                        <i>Contoh:</i> 2^3 x 2^4 = 2^(3+4) = 2^7 (128).<br><br>
-                        <b>2. Pembahagian (a^m / a^n = a^(m-n)):</b> Tolak kuasa apabila asas sama.<br>
-                        <i>Contoh:</i> 5^5 / 5^2 = 5^(5-2) = 5^3 (125).`
+                        steps: `<b>Nota & Jalan Kerja Terperinci:</b><br><br>
+                        <b>1. Hukum Pendaraban ($a^m \\times a^n = a^{m+n}$):</b><br>
+                        - Apabila asas nombor sama didarabkan, kuasa-kuasanya mesti <u>dijumlahkan</u>.<br>
+                        - <i>Contoh Jalan Kerja:</i> Selesaikan $2^3 \\times 2^4$<br>
+                        &nbsp;&nbsp;• Langkah 1: Kenal pasti asas nombor iaitu 2 (sama).<br>
+                        &nbsp;&nbsp;• Langkah 2: Tambahkan nombor kuasa: $3 + 4 = 7$.<br>
+                        &nbsp;&nbsp;• Langkah 3: Tulis jawapan akhir dalam bentuk indeks iaitu $2^7$ atau nilai nombor penuh $128$.<br><br>
+                        <b>2. Hukum Pembahagian ($a^m \\div a^n = a^{m-n}$):</b><br>
+                        - Apabila asas nombor sama dibahagikan, kuasa-kuasanya mesti <u>ditolak</u>.<br>
+                        - <i>Contoh Jalan Kerja:</i> Selesaikan $5^5 \\div 5^2$<br>
+                        &nbsp;&nbsp;• Langkah 1: Tolak kuasa: $5 - 2 = 3$.<br>
+                        &nbsp;&nbsp;• Jawapan akhir: $5^3$ (atau $125$).`
                     },
                     { 
                         name: 'Bab 2: Bentuk Piawai', 
-                        concept: 'Penulisan nombor besar atau kecil dalam format A x 10^n (1 <= A < 10).',
-                        steps: `<b>Huraian & Jalan Kerja Lengkap:</b><br><br>
-                        <b>Langkah:</b> Gerakkan titik perpuluhan sehingga tinggal 1 digit di depan.<br>
-                        - Gerak ke KIRI = Kuasa POSITIF (+)<br>
-                        - Gerak ke KANAN = Kuasa NEGATIF (-)<br>
-                        <i>Contoh:</i> 45000 = 4.5 x 10^4.`
+                        concept: 'Cara menulis nombor sangat besar atau sangat kecil dalam format $A \\times 10^n$ ($1 \\le A < 10$).',
+                        steps: `<b>Nota & Jalan Kerja Terperinci:</b><br><br>
+                        <b>Langkah 1:</b> Gerakkan titik perpuluhan sehingga nombor di hadapan berada di antara 1 hingga 9.99 ($A$).<br>
+                        <b>Langkah 2:</b> Kira berapa tempat titik perpuluhan digerakkan untuk menentukan nilai kuasa $n$.<br>
+                        - Jika titik digerak ke <b>KIRI</b> $\\rightarrow$ Kuasa $n$ bernilai <b>POSITIF</b> (+).<br>
+                        - Jika titik digerak ke <b>KANAN</b> $\\rightarrow$ Kuasa $n$ bernilai <b>NEGATIF</b> (-).<br><br>
+                        <i>Contoh Jalan Kerja:</i> Tulis $45000$ dalam bentuk piawai.<br>
+                        1. Titik asal di belakang nombor 0 digerakkan ke kiri sebanyak 4 tempat menjadi $4.5$.<br>
+                        2. Kerana titik bergerak ke kiri sebanyak 4 tempat, nilai kuasa ialah $4$.<br>
+                        3. <b>Jawapan Akhir:</b> $4.5 \\times 10^4$.`
                     },
                     { 
                         name: 'Bab 3: Matematik Pengguna (Simpanan & Pelaburan)', 
-                        concept: 'Pengiraan Faedah Mudah (I = Prt) dan Faedah Kompaun.',
-                        steps: `<b>Huraian & Jalan Kerja Lengkap:</b><br><br>
-                        <b>Rumus Faedah Mudah:</b> I = Prt<br>
-                        <i>Contoh:</i> Simpanan RM5000, kadar 3% setahun selama 2 tahun.<br>
-                        I = 5000 x (3/100) x 2 = RM300.`
+                        concept: 'Pengiraan Faedah Mudah ($I = Prt$) dan Faedah Kompaun dalam simpanan bank.',
+                        steps: `<b>Nota & Jalan Kerja Terperinci:</b><br><br>
+                        <b>Rumus Faedah Mudah:</b> $I = Prt$<br>
+                        - $I$ = Faedah (RM), $P$ = Wang simpanan asal, $r$ = Kadar faedah setahun, $t$ = Tempoh tahun.<br><br>
+                        <i>Contoh Jalan Kerja:</i> Encik Ali simpan RM5,000 dengan kadar 3% setahun selama 2 tahun.<br>
+                        1. Tukar peratus kepada perpuluhan: $3 / 100 = 0.03$.<br>
+                        2. Masukkan dalam rumus: $I = 5000 \\times 0.03 \\times 2$.<br>
+                        3. Hitung nilai: $I = \\text{RM}300$ (Jumlah faedah yang diterima).`
                     },
                     { 
                         name: 'Bab 4: Lukisan Berskala', 
-                        concept: 'Hubungan ukuran sebenar objek dengan lukisan berskala 1 : n.',
-                        steps: `<b>Huraian & Jalan Kerja Lengkap:</b><br><br>
-                        Rumus: Ukuran Lukisan = Ukuran Sebenar x Skala.<br>
-                        Sentiasa pastikan unit pertukaran diselaraskan terlebih dahulu.`
+                        concept: 'Hubungan ukuran sebenar objek dengan ukuran pada lukisan berskala $1 : n$.',
+                        steps: `<b>Nota & Jalan Kerja Terperinci:</b><br><br>
+                        Rumus: $\\text{Ukuran Lukisan} = \\text{Ukuran Sebenar} \\times \\text{Skala}$.<br>
+                        <i>Contoh Jalan Kerja:</i> Jika skala pelan ialah $1 : 50$ dan panjang lukisan ialah $4\\text{ cm}$, berapakah panjang sebenar objek?<br>
+                        1. Panjang sebenar = $4\\text{ cm} \\times 50 = 200\\text{ cm}$.<br>
+                        2. Tukar kepada meter bahagi 100: $\\mathbf{2\\text{ meter}}$.`
                     },
                     { 
                         name: 'Bab 5: Nisbah, Kadar & Perkadaran', 
-                        concept: 'Membandingkan kuantiti serta mengira laju, jarak dan masa.',
-                        steps: `<b>Huraian & Jalan Kerja Lengkap:</b><br><br>
-                        Rumus Laju = Jarak / Masa.<br>
-                        <i>Contoh:</i> Jarak 180 km dalam masa 2 jam -> 180 / 2 = 90 km/j.`
+                        concept: 'Membandingkan kuantiti serta mengira perkaitan laju, jarak dan masa.',
+                        steps: `<b>Nota & Jalan Kerja Terperinci:</b><br><br>
+                        Rumus Laju: $\\text{Laju} = \\frac{\\text{Jarak}}{\\text{Masa}}$.<br>
+                        <i>Contoh Jalan Kerja:</i> Sebuah kereta bergerak sejauh $180\\text{ km}$ dalam masa $2\\text{ jam}$. Berapakah lajunya?<br>
+                        1. Masukkan nilai ke dalam rumus: $\\text{Laju} = \\frac{180}{2}$.<br>
+                        2. <b>Jawapan Akhir:</b> $\mathbf{90\\text{ km/j}}$.`
                     },
                     { 
                         name: 'Bab 6: Teorem Pythagoras', 
-                        concept: 'Mencari panjang sisi tidak diketahui dalam segi tiga bersudut tegak.',
-                        steps: `<b>Huraian & Jalan Kerja Lengkap:</b><br><br>
-                        Rumus: c^2 = a^2 + b^2 (c ialah hipotenus).<br>
-                        <i>Contoh:</i> Tapak a = 3, tinggi b = 4 -> c^2 = 3^2 + 4^2 = 25 -> c = 5 cm.`
+                        concept: 'Mencari panjang sisi yang tidak diketahui dalam segi tiga bersudut tegak.',
+                        steps: `<b>Nota & Jalan Kerja Terperinci:</b><br><br>
+                        <b>Rumus Utama:</b> $c^2 = a^2 + b^2$<br>
+                        ($c$ = Hipotenus / sisi paling panjang bertentangan sudut tegak; $a$ dan $b$ = sisi tapak & tinggi).<br><br>
+                        <i>Contoh Jalan Kerja:</i> Diberi tapak $a = 3\\text{ cm}$ dan tinggi $b = 4\\text{ cm}$. Cari hipotenus $c$.<br>
+                        1. Tulis rumus: $c^2 = 3^2 + 4^2$.<br>
+                        2. Kuasa dua nilai: $c^2 = 9 + 16 = 25$.<br>
+                        3. Punca kuasakan: $c = \\sqrt{25} = \\mathbf{5\\text{ cm}}$.`
                     },
                     { 
                         name: 'Bab 7: Pelan dan Dongakan', 
-                        concept: 'Unjuran ortogon objek 3 dimensi pada satah mengufuk dan mencancang.',
-                        steps: `<b>Huraian Langkah Demi Langkah:</b><br><br>
-                        1. Pelan = Pandangan dari atas.<br>
-                        2. Dongakan Depan = Pandangan dari arah depan.<br>
-                        3. Dongakan Sisi = Pandangan dari tepi.<br>Pastikan saiz unjuran selari dengan objek asal.`
+                        concept: 'Unjuran ortogon objek tiga dimensi pada satah mengufuk dan mencancang.',
+                        steps: `<b>Nota & Huraian Terperinci:</b><br><br>
+                        1. <b>Pelan:</b> Pandangan atas objek dilihat dari arah mencancang ke bawah.<br>
+                        2. <b>Dongakan Depan:</b> Pandangan objek dari arah depan selari satah mencancang.<br>
+                        3. <b>Dongakan Sisi:</b> Pandangan objek dari arah kiri atau kanan.<br>
+                        *Pastikan unjuran garis selari dan dimensi ukuran panjang serta lebar adalah tepat dengan unjuran objek asal.`
                     }
                 ]
             },
             'sains': {
                 title: 'Sains Tingkatan 3',
                 color: 'green',
+                boxTitle: 'Nota Huraian & Konsep Sains Terperinci:',
                 chapters: [
-                    { name: 'Bab 1: Rangsangan dan Gerak Balas', concept: 'Sistem saraf manusia mengesan rangsangan.', steps: '<b>Huraian:</b> Reseptor -> Saraf Deria -> Otak -> Saraf Motor -> Efektor.' },
-                    { name: 'Bab 2: Respirasi', concept: 'Mekanisme pernafasan manusia.', steps: '<b>Huraian:</b> Perbezaan otot interkostal dan pergerakan diafragma semasa menarik dan menghembus nafas.' },
-                    { name: 'Bab 3: Kitaran Nutrien dalam Ekosistem', concept: 'Kitar karbon dan kitar nitrogen.', steps: '<b>Huraian:</b> Peranan bakteria pengikat nitrogen dan kilat menyuburkan tanah.' },
-                    { name: 'Bab 4: Kesihatan Manusia', concept: 'Penyakit berjangkit dan tidak berjangkit.', steps: '<b>Huraian:</b> Perbandingan jenis penyakit serta cara pencegahan dan imunisasi.' },
-                    { name: 'Bab 5: Air dan Larutan', concept: 'Sifat fizik air dan proses larutan.', steps: '<b>Huraian:</b> Perbezaan larutan cair, pekat, dan tepu pada suhu tertentu.' },
-                    { name: 'Bab 6: Termokimia', concept: 'Tindak balas eksotermik dan endotermik.', steps: '<b>Huraian:</b> Eksotermik membebaskan haba (suhu naik), endotermik menyerap haba (suhu turun).' },
-                    { name: 'Bab 7: Keelektrikan dan Kekomagnetan', concept: 'Arus, voltan, rintangan & Hukum Ohm.', steps: '<b>Huraian:</b> Rumus V = I x R.' },
-                    { name: 'Bab 8: Tenaga dan Kuasa', concept: 'Kecekapan tenaga alatan rumah.', steps: '<b>Huraian:</b> Rumus kecekapan tenaga peratus output bahagi input.' },
-                    { name: 'Bab 9: Bumi dan Angkasa Lepas', concept: 'Satelit dan cuaca angkasa lepas.', steps: '<b>Huraian:</b> Fungsi satelit komunikasi dan satelit cuaca.' }
+                    { name: 'Bab 1: Rangsangan dan Gerak Balas', concept: 'Sistem saraf manusia mengesan dan bertindak balas terhadap perubahan persekitaran.', steps: '<b>Nota Huraian Penuh:</b><br>Laluan impuls saraf bermula dari <b>Reseptor (Deria)</b> $\\rightarrow$ <b>Saraf Deria</b> $\\rightarrow$ <b>Pusat Kawalan (Otak & Saraf Tunjang)</b> $\\rightarrow$ <b>Saraf Motor</b> $\\rightarrow$ <b>Efektor (Otot/Kelenjar)</b> yang melakukan tindakan gerak balas.' },
+                    { name: 'Bab 2: Respirasi', concept: 'Mekanisme pernafasan manusia dan proses pertukaran gas di alveolus.', steps: '<b>Nota Huraian Penuh:</b><br>Semasa <i>tarik nafas</i>, otot interkostal mengecut, tulang rusuk naik, dan diafragma mendatar ke bawah untuk merendahkan tekanan udara dalam rongga dada supaya udara luar masuk ke paru-paru.' },
+                    { name: 'Bab 3: Kitaran Nutrien dalam Ekosistem', concept: 'Peranan kitar karbon dan kitar nitrogen dalam mengekalkan keseimbangan alam.', steps: '<b>Nota Huraian Penuh:</b><br>Kitar nitrogen melibatkan bakteria pengikat nitrogen di dalam tanah yang menukarkan gas nitrogen atmosfera kepada sebatian nitrat yang boleh diserap oleh akar tumbuhan.' },
+                    { name: 'Bab 4: Kesihatan Manusia', concept: 'Penyakit berjangkit dan penyakit tidak berjangkit serta sistem pertahanan badan.', steps: '<b>Nota Huraian Penuh:</b><br>Penyakit berjangkit merebak melalui air, udara, dan vektor (contoh: denggi oleh nyamuk Aedes), manakala penyakit tidak berjangkit disebabkan faktor genetik dan gaya hidup.' },
+                    { name: 'Bab 5: Air dan Larutan', concept: 'Sifat fizik air, proses penulenan air, serta jenis larutan cair, pekat dan tepu.', steps: '<b>Nota Huraian Penuh:</b><br>Larutan tepu ialah larutan yang mengandungi kuantiti maksimum zat terlarut yang boleh dilarutkan pada suhu tertentu.' },
+                    { name: 'Bab 6: Termokimia', concept: 'Tindak balas eksotermik (membebaskan haba) dan endotermik (menyerap haba).', steps: '<b>Nota Huraian Penuh:</b><br>Tindak balas eksotermik menyebabkan suhu persekitaran meningkat kerana haba dibebaskan keluar, manakala endotermik menurunkan suhu persekitaran kerana haba diserap masuk.' },
+                    { name: 'Bab 7: Keelektrikan dan Kekomagnetan', concept: 'Arus, voltan, rintangan serta penggunaan Hukum Ohm.', steps: '<b>Nota Huraian Penuh:</b><br>Hukum Ohm menyatakan rintangan berkadar songsang dengan arus; rumus utama ialah $V = I \\times R$ (Voltan = Arus $\\times$ Rintangan).' },
+                    { name: 'Bab 8: Tenaga dan Kuasa', concept: 'Pengiraan kecekapan tenaga bagi peralatan elektrik rumah.', steps: '<b>Nota Huraian Penuh:</b><br>Kecekapan tenaga dihitung melalui peratusan tenaga berfaedah output dibahagikan dengan jumlah tenaga input.' },
+                    { name: 'Bab 9: Bumi dan Angkasa Lepas', concept: 'Fungsi satelit, stesen angkasa, dan cuaca angkasa lepas.', steps: '<b>Nota Huraian Penuh:</b><br>Satelit cuaca mengorbit bumi untuk meramal ribut taufan, memantau perubahan iklim, dan mengumpul data meteorologi global.' }
                 ]
             },
             'sejarah': {
                 title: 'Sejarah Tingkatan 3',
                 color: 'amber',
+                boxTitle: 'Nota Kronologi & Huraian Peristiwa Sejarah:',
                 chapters: [
-                    { name: 'Bab 1: Kedatangan Kuasa Luar', concept: 'Faktor dan strategi kuasa besar.', steps: '<b>Huraian:</b> Kekayaan bijih timah serta taktik pajakan, tipu muslihat, dan ugutan.' },
-                    { name: 'Bab 2: Pentadbiran Negeri-Negeri Melayu', concept: 'Sistem Residen dan Penasihat British.', steps: '<b>Huraian:</b> Kesan kehilangan kuasa sultan terhadap pentadbiran dan pungutan cukai.' },
-                    { name: 'Bab 3: Pentadbiran British & Kesannya', concept: 'Ekonomi moden dan masyarakat majmuk.', steps: '<b>Huraian:</b> Kemasukan buruh luar melalui sistem tiket kredit dan kangani.' },
-                    { name: 'Bab 4: Penentangan Masyarakat Tempatan', concept: 'Perjuangan pahlawan negara.', steps: '<b>Huraian:</b> Rentap, Dato Bahaman, Tok Janggut, Mat Salleh menentang dasar British.' },
-                    { name: 'Bab 5: Gerakan Nasionalisme', concept: 'Kesedaran awal melalui akhbar dan persatuan.', steps: '<b>Huraian:</b> Peranan Kaum Muda dan intelektual melayu membangkitkan semangat bangsa.' },
-                    { name: 'Bab 6: Kesan Pendudukan Jepun', concept: 'Pengalaman pentadbiran tentera Jepun.', steps: '<b>Huraian:</b> Kesusahan hidup rakyat, catuan makanan, dan buruh paksa.' }
+                    { name: 'Bab 1: Kedatangan Kuasa Luar', concept: 'Faktor dan strategi kuasa besar Eropah campur tangan di Tanah Melayu.', steps: '<b>Nota Huraian Penuh & Serius:</b><br>1. <b>Faktor Utama:</b> Kekayaan hasil bumi seperti bijih timah, kelebihan kedudukan geografi di tengah laluan perdagangan timur dan barat, serta keperluan mendapatkan bahan mentah untuk kilang industri di Eropah semasa Revolusi Perindustrian.<br>2. <b>Strategi British:</b> British menggunakan pelbagai taktik licik termasuk pajakan (Pulau Pinang), tipu muslihat dalam perebutan takhta istana (Perak), serta ugutan ketenteraan terhadap pembesar tempatan.' },
+                    { name: 'Bab 2: Pentadbiran Negeri-Negeri Melayu', concept: 'Sistem Residen di NNMB dan Sistem Penasihat British di NNMTB.', steps: '<b>Nota Huraian Penuh & Serius:</b><br>Melalui Sistem Residen yang diperkenalkan di Perak, Selangor, Negeri Sembilan, dan Pahang, kuasa pentadbiran sultan dan pembesar Melayu merosot teruk kerana segala nasihat Residen British wajib diterima dan dipatuhi, kecuali dalam hal ehwal agama Islam dan adat istiadat Melayu.' },
+                    { name: 'Bab 3: Pentadbiran British & Kesannya', concept: 'Perubahan ekonomi perlombongan moden dan pembentukan masyarakat majmuk.', steps: '<b>Nota Huraian Penuh & Serius:</b><br>Perkembangan pesat industri getah dan bijih timah mendorong British membawa masuk tenaga buruh luar secara besar-besaran, iaitu buruh dari China melalui Sistem Tiket Kredit dan buruh dari India melalui Sistem Kangani, yang membentuk demografi masyarakat berbilang kaum di Tanah Melayu.' },
+                    { name: 'Bab 4: Penentangan Masyarakat Tempatan', concept: 'Perjuangan pahlawan tempatan menentang dasar penindasan British.', steps: '<b>Nota Huraian Penuh & Serius:</b><br>Barisan pahlawan seperti Rentap di Sarawak, Dato\' Bahaman di Pahang, Tok Janggut di Kelantan, dan Mat Salleh di Sabah bangkit menentang British kerana membantah campur tangan pentadbiran luar, pengenalan cukai yang membebankan rakyat, serta pencabulan terhadap adat resam tempatan.' },
+                    { name: 'Bab 5: Gerakan Nasionalisme', concept: 'Kesedaran awal membela bangsa melalui peranan akhbar dan persatuan.', steps: '<b>Nota Huraian Penuh & Serius:</b><br>Gerakan nasionalisme peringkat awal digerakkan oleh golongan berpendidikan Kaum Muda melalui akhbar seperti <i>Al-Imam</i>, yang menyedarkan masyarakat Melayu agar memajukan diri dalam bidang pendidikan moden, ekonomi, dan menolak semangat taasub.' },
+                    { name: 'Bab 6: Kesan Pendudukan Jepun', concept: 'Pengalaman pahit dan kesengsaraan rakyat di bawah pentadbiran tentera Jepun.', steps: '<b>Nota Huraian Penuh & Serius:</b><br>Pendudukan Jepun dari tahun 1941 hingga 1945 meninggalkan kesan trauma yang mendalam akibat dasar kejam pentadbiran tentera, masalah kekurangan bekalan makanan yang teruk, catuan beras, ketiadaan ubat-ubatan, serta ancaman intipan pasukan keselamatan Jepun (Kempeitai).' }
                 ]
             },
             'bm': {
                 title: 'Bahasa Melayu Tingkatan 3',
                 color: 'rose',
+                boxTitle: 'Nota Tatabahasa & Panduan Penulisan:',
                 chapters: [
-                    { name: '1. Tatabahasa (Ayat Aktif & Pasif)', concept: 'Panduan menukar ayat aktif ke pasif.', steps: '<b>Huraian:</b> Orang 1/2 tiada "di-", Orang 3 wajib ada "di-" dan "oleh".' },
-                    { name: '2. Karangan Bahagian A (Ulasan)', concept: 'Format penulisan ulasan grafik.', steps: '<b>Huraian:</b> 80-100 patah perkataan merangkumi pengenalan, isi tersurat/tersirat, dan penutup.' },
-                    { name: '3. Karangan Bahagian B (Berformat)', concept: 'Format syarahan, rencana, dan surat rasmi.', steps: '<b>Huraian:</b> Panduan protokol kata alu-aluan dan penutup rasmi.' },
-                    { name: '4. Komsas & Novel Tingkatan 3', concept: 'Analisis sastera dan novel KSSM.', steps: '<b>Huraian:</b> Tema, persoalan, watak perwatakan dan nilai murni.' }
+                    { name: '1. Tatabahasa (Ayat Aktif & Pasif)', concept: 'Panduan menukar ayat aktif kepada ayat pasif mengikut hukum tatabahasa DBP.', steps: '<b>Nota Huraian Penuh:</b><br>- <b>Ayat Aktif:</b> Subjek pelaku berada di hadapan (Contoh: <i>Ali membaca buku itu</i>).<br>- <b>Ayat Pasif (Orang 1 & 2):</b> Ganti nama diri pertama (saya/kami/awak) <u>tidak boleh</u> menerima imbuhan <i>di-</i> (Contoh: Buku itu <i>saya baca</i>).<br>- <b>Ayat Pasif (Orang 3):</b> Wajib menggunakan imbuhan awalan <i>di-</i> dan kata sendi <i>oleh</i> (Contoh: Buku itu <i>dibaca oleh Ali</i>).' },
+                    { name: '2. Karangan Bahagian A (Ulasan)', concept: 'Format lengkap penulisan ulasan berdasarkan bahan grafik.', steps: '<b>Nota Huraian Penuh:</b><br>Panjang karangan adalah antara 80 hingga 100 patah perkataan. Struktur penulisan merangkumi satu perenggan pendahuluan (menyatakan umum bahan), 3 isi tersurat dan tersirat berserta huraian, serta satu perenggan kesimpulan menyeluruh.' },
+                    { name: '3. Karangan Bahagian B (Berformat)', concept: 'Panduan format karangan berformat seperti syarahan, rencana, dan surat rasmi.', steps: '<b>Nota Huraian Penuh:</b><br>Pastikan format penulisan mematuhi protokol rasmi, seperti kata alu-aluan pengenalan berprotokol (Tuan Pengerusi Majlis, para hakim...) bagi syarahan, serta format tandatangan dan alamat pengirim bagi surat rasmi.' },
+                    { name: '4. Komsas & Novel Tingkatan 3', concept: 'Analisis komponen sastera, tema, persoalan dan nilai murni novel.', steps: '<b>Nota Huraian Penuh:</b><br>Pelajar perlu menguasai huraian watak utama, perwatakan, latar tempat, latar masa, gaya bahasa, serta pengajaran dan nilai murni (seperti semangat bertanggungjawab dan kerjasama) yang terdapat dalam teks novel pilihan KSSM.' }
                 ]
             },
             'english': {
                 title: 'English T3 (Support BM)',
                 color: 'purple',
+                boxTitle: 'Literature & Grammar Guide (Support BM):',
                 chapters: [
-                    { name: '1. Literature Component', concept: 'Poems & Short stories analysis.', steps: '<b>Huraian:</b> Terjemahan BM dan nota pemahaman maksud sajak.' },
-                    { name: '2. Novel: The Interloper', concept: 'Character and plot analysis.', steps: '<b>Huraian:</b> Panduan watak utama Artie dan nilai murni.' },
-                    { name: '3. Directed Writing', concept: 'Formal letters and reports.', steps: '<b>Huraian:</b> Susunan format alamat, salutation, dan penutup.' },
-                    { name: '4. Grammar Focus', concept: 'Past Simple & Past Continuous.', steps: '<b>Huraian:</b> Penggunaan was/were + verb-ing dengan betul dalam ayat.' }
+                    { name: '1. Literature Component', concept: 'Poems & Short stories analysis with bilingual notes.', steps: '<b>Detailed Notes (Nota Huraian Penuh):</b><br>Understand the underlying themes and symbolism in poems (e.g., in "The Poison Tree", the apple symbolizes hidden anger and vengeance). Review short story summaries and moral values in Malay.' },
+                    { name: '2. Novel: The Interloper', concept: 'Character breakdown, plot summary, and moral lessons.', steps: '<b>Detailed Notes (Nota Huraian Penuh):</b><br>Analyze the main character Artie, the challenges faced throughout the storyline, and important moral lessons regarding courage, friendship, and honesty.' },
+                    { name: '3. Directed Writing', concept: 'Format guide for formal letters, informal letters, and reports.', steps: '<b>Detailed Notes (Nota Huraian Penuh):</b><br>Master the correct layout: sender’s address on the top left, date, recipient’s address, formal salutation (Dear Sir/Madam), and sign-off (Yours faithfully).' },
+                    { name: '4. Grammar Focus', concept: 'Mastering Past Simple and Past Continuous tenses in sentences.', steps: '<b>Detailed Notes (Nota Huraian Penuh):</b><br>Use Past Simple for completed actions (e.g., <i>He arrived yesterday</i>) and Past Continuous (was/were + verb-ing) for ongoing actions interrupted in the past (e.g., <i>I was studying when he arrived</i>).' }
                 ]
             }
         };
@@ -245,7 +276,28 @@
                 return;
             }
             box.classList.remove('hidden');
-            box.innerHTML = `<b>🤖 Cikgu AI:</b> Mengenai "${val}", sila pilih subjek di bawah untuk melihat nota terperinci dan jalan kerja langkah demi langkah!`;
+            box.innerHTML = `<b>🤖 Cikgu AI:</b> Mengenai "${val}", sila pilih subjek di bawah untuk melihat nota terperinci bab buku teks KSSM!`;
+        }
+
+        function startHomeVoice() {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRecognition) {
+                alert('Pelayar web anda tidak menyokong input suara.');
+                return;
+            }
+            const recognition = new SpeechRecognition();
+            recognition.lang = 'ms-MY';
+            const icon = document.getElementById('home-mic-icon');
+            icon.classList.add('fa-spin', 'text-indigo-600');
+            recognition.start();
+            recognition.onresult = function(event) {
+                document.getElementById('gemini-search-input').value = event.results[0][0].transcript;
+                icon.classList.remove('fa-spin', 'text-indigo-600');
+                triggerGeminiSearch();
+            };
+            recognition.onerror = function() {
+                icon.classList.remove('fa-spin', 'text-indigo-600');
+            };
         }
 
         function openSubject(key) {
@@ -264,7 +316,7 @@
             
             document.getElementById('subject-content').innerHTML = `
                 <h2 class="text-2xl font-bold mb-2 text-${data.color}-600">${data.title}</h2>
-                <p class="text-slate-600 mb-6">Pilih bab di bawah untuk melihat huraian jalan kerja lengkap:</p>
+                <p class="text-slate-600 mb-6">Pilih bab di bawah untuk membaca nota huraian lengkap:</p>
                 <div>${listHtml}</div>
             `;
             window.scrollTo(0, 0);
@@ -286,32 +338,60 @@
                 </div>
 
                 <div class="bg-emerald-50 p-5 rounded-xl border border-emerald-100">
-                    <h3 class="font-bold text-emerald-900 mb-3"><i class="fa-solid fa-list-check mr-1"></i> Huraian Jalan Kerja & Langkah Demi Langkah:</h3>
+                    <h3 class="font-bold text-emerald-900 mb-3"><i class="fa-solid fa-list-check mr-1"></i> ${data.boxTitle}</h3>
                     <div class="text-slate-700 leading-relaxed text-sm space-y-2">${ch.steps}</div>
                 </div>
             `;
             window.scrollTo(0, 0);
         }
 
+        // KOTAK BANTUAN DI BAWAH (YOUTUBE HANYA KELUAR BILA MURID MENGAKU TAK FAHAM)
         function askFollowupAI() {
             const query = document.getElementById('followup-input').value.trim();
             const box = document.getElementById('followup-box');
 
             if(!query) {
-                alert('Sila taip bahagian mana yang adik masih tak faham.');
+                alert('Sila taip atau cakap bahagian mana yang adik masih tidak faham.');
                 return;
             }
 
             box.classList.remove('hidden');
-            box.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-2"></i> Cikgu AI sedang huraikan dan sediakan rujukan video...`;
+            box.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-2"></i> Cikgu AI sedang menyediakan huraian mendalam dan rujukan video...`;
 
             setTimeout(() => {
-                let reply = `Jangan risau. Mengenai "${query}", kuncinya ialah ulang semula langkah pengiraan di atas perlahan-lahan.<br><br>` +
-                            `🎥 <b>Rujukan Tambahan YouTube:</b><br>` +
-                            `<a href="https://www.youtube.com/results?search_query=kssm+tingkatan+3+${encodeURIComponent(query)}" target="_blank" class="text-cyan-300 underline font-bold"><i class="fa-brands fa-youtube text-red-500"></i> Klik sini untuk tonton penerangan video di YouTube</a>`;
+                let reply = `Jangan risau, Cikgu faham. Berhubung dengan soalan "${query}", kuncinya ialah pelajar perlu membaca semula nota huraian di atas langkah demi langkah secara teliti.<br><br>` +
+                            `🎥 <b>Rujukan Tambahan Video YouTube:</b><br>` +
+                            `<a href="https://www.youtube.com/results?search_query=kssm+tingkatan+3+${encodeURIComponent(query)}" target="_blank" class="text-cyan-300 underline font-bold"><i class="fa-brands fa-youtube text-red-500"></i> Klik sini untuk tonton penerangan guru di YouTube</a>`;
                 
                 box.innerHTML = `<b>🤖 Cikgu AI:</b><br><br>${reply}`;
             }, 800);
+        }
+
+        function startFollowupVoice() {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRecognition) {
+                alert('Pelayar web anda tidak menyokong input suara.');
+                return;
+            }
+            const recognition = new SpeechRecognition();
+            recognition.lang = 'ms-MY';
+            const micBtn = document.getElementById('mic-btn');
+            micBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i>`;
+            micBtn.classList.add('bg-amber-500');
+
+            recognition.start();
+
+            recognition.onresult = function(event) {
+                document.getElementById('followup-input').value = event.results[0][0].transcript;
+                micBtn.innerHTML = `<i class="fa-solid fa-microphone"></i>`;
+                micBtn.classList.remove('bg-amber-500');
+                askFollowupAI();
+            };
+
+            recognition.onerror = function() {
+                micBtn.innerHTML = `<i class="fa-solid fa-microphone"></i>`;
+                micBtn.classList.remove('bg-amber-500');
+            };
         }
 
         function backToSubject() {
