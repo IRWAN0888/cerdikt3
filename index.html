@@ -12,7 +12,7 @@
     <header class="bg-indigo-600 text-white shadow-md sticky top-0 z-50">
         <div class="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
             <h1 class="text-xl font-bold flex items-center gap-2 cursor-pointer" onclick="showHome()"><i class="fa-solid fa-house-chimney-user"></i> CerdikT3</h1>
-            <span class="text-xs bg-indigo-500 px-3 py-1 rounded-full"><i class="fa-solid fa-chalkboard-user"></i> Jalan Kerja & Nota Lengkap</span>
+            <span class="text-xs bg-indigo-500 px-3 py-1 rounded-full"><i class="fa-solid fa-chalkboard-user"></i> Semua Bab KSSM T3</span>
         </div>
     </header>
 
@@ -21,23 +21,23 @@
         <div id="home-view">
             <section class="text-center mb-6">
                 <h2 class="text-2xl font-bold mb-2">Kelas Cikgu Di Rumah</h2>
-                <p class="text-slate-600 mb-6">Pilih subjek di bawah atau tanya Cikgu AI terus menggunakan kotak carian gaya Gemini.</p>
+                <p class="text-slate-600 mb-6">Pilih subjek di bawah untuk melihat senarai penuh kesemua bab buku teks KSSM.</p>
             </section>
 
-            <!-- KOTAK CARIAN GAYA GEMINI (SEPERTI DALAM GAMBAR) -->
+            <!-- KOTAK CARIAN GAYA GEMINI -->
             <div class="max-w-xl mx-auto mb-8">
                 <div class="bg-white rounded-full shadow-md border border-slate-200 px-4 py-2 flex items-center gap-3">
-                    <button class="w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition" title="Tambah / Lampiran">
+                    <button class="w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition" title="Tambah">
                         <i class="fa-solid fa-plus"></i>
                     </button>
                     
                     <input type="text" id="gemini-search-input" placeholder="Tanya Cikgu AI..." class="flex-1 bg-transparent border-none focus:outline-none text-slate-700 text-base placeholder-slate-400">
                     
-                    <button onclick="alert('Sila taip soalan atau pilih subjek di bawah.')" class="text-slate-500 hover:text-indigo-600 p-2 transition" title="Cakap">
+                    <button onclick="alert('Sila pilih subjek di bawah untuk nota lengkap setiap bab.')" class="text-slate-500 hover:text-indigo-600 p-2 transition">
                         <i class="fa-solid fa-microphone text-lg"></i>
                     </button>
 
-                    <button onclick="triggerGeminiSearch()" class="w-10 h-10 rounded-full bg-sky-100 hover:bg-sky-200 text-sky-600 flex items-center justify-center transition shadow-sm" title="Mod Suara / Hantar">
+                    <button onclick="triggerGeminiSearch()" class="w-10 h-10 rounded-full bg-sky-100 hover:bg-sky-200 text-sky-600 flex items-center justify-center transition shadow-sm">
                         <i class="fa-solid fa-sliders text-sm"></i>
                     </button>
                 </div>
@@ -50,7 +50,7 @@
                     <div class="bg-blue-100 text-blue-600 p-4 rounded-lg text-xl"><i class="fa-solid fa-calculator"></i></div>
                     <div>
                         <h3 class="font-bold text-lg">Matematik T3</h3>
-                        <p class="text-sm text-slate-500">Huraian & Jalan Kira Lengkap 1 Persatu</p>
+                        <p class="text-sm text-slate-500">Bab 1 hingga Bab 7 (Lengkap)</p>
                     </div>
                 </div>
 
@@ -58,7 +58,7 @@
                     <div class="bg-green-100 text-green-600 p-4 rounded-lg text-xl"><i class="fa-solid fa-atom"></i></div>
                     <div>
                         <h3 class="font-bold text-lg">Sains T3</h3>
-                        <p class="text-sm text-slate-500">Konsep Sains & Eksperimen Buku Teks</p>
+                        <p class="text-sm text-slate-500">Bab 1 hingga Bab 9 (Lengkap)</p>
                     </div>
                 </div>
 
@@ -66,7 +66,7 @@
                     <div class="bg-amber-100 text-amber-600 p-4 rounded-lg text-xl"><i class="fa-solid fa-landmark"></i></div>
                     <div>
                         <h3 class="font-bold text-lg">Sejarah T3</h3>
-                        <p class="text-sm text-slate-500">Kronologi Peristiwa & Huraian Buku Teks</p>
+                        <p class="text-sm text-slate-500">Bab 1 hingga Bab 6 (Lengkap)</p>
                     </div>
                 </div>
 
@@ -106,12 +106,12 @@
             
             <div id="chapter-content" class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 mb-6"></div>
 
-            <!-- KOTAK BANTUAN DI BAWAH: HANYA KELUAR LINK YOUTUBE BILA MURID TANYA (MASIH TAK FAHAM) -->
+            <!-- KOTAK BANTUAN DI BAWAH (YOUTUBE LINK) -->
             <div class="bg-slate-900 text-white p-6 rounded-2xl shadow-lg">
                 <h3 class="font-bold text-lg mb-2 flex items-center gap-2 text-indigo-300">
                     <i class="fa-solid fa-circle-question"></i> Masih Belum Faham Jalan Kerja Di Atas?
                 </h3>
-                <p class="text-xs text-slate-300 mb-4">Taip bahagian mana yang adik nak Cikgu huraikan lagi. Cikgu akan beri penerangan dan pautan YouTube.</p>
+                <p class="text-xs text-slate-300 mb-4">Taip bahagian mana yang adik nak Cikgu huraikan lagi untuk dapatkan rujukan YouTube.</p>
                 <div class="flex gap-2 mb-3">
                     <input type="text" id="followup-input" placeholder="Cth: Cikgu, saya tak faham macam mana dapat nilai tu..." class="flex-1 px-4 py-3 rounded-xl text-sm text-slate-800 focus:outline-none bg-white">
                     <button onclick="askFollowupAI()" class="bg-indigo-500 hover:bg-indigo-600 text-white px-5 py-3 rounded-xl font-medium text-sm transition shadow-sm">
@@ -134,44 +134,57 @@
                     { 
                         name: 'Bab 1: Indeks', 
                         concept: 'Hukum indeks melibatkan pendaraban, pembahagian, dan kuasa nombor berindeks asas sama.',
-                        steps: `<b>Huraian & Jalan Kerja Lengkap 1 Persatu:</b><br><br>
-                        <b>1. Hukum Pendaraban (a^m x a^n = a^(m+n)):</b><br>
-                        - Apabila asas nombor sama didarabkan, kuasa-kuasanya mesti <u>dijumlahkan</u>.<br>
-                        - <i>Contoh Jalan Kerja:</i> Selesaikan 2^3 x 2^4<br>
-                        &nbsp;&nbsp;• Kenal pasti asas: 2 (sama)<br>
-                        &nbsp;&nbsp;• Tambah kuasa: 3 + 4 = 7<br>
-                        &nbsp;&nbsp;• Jawapan akhir: 2^7 (atau 128).<br><br>
-                        <b>2. Hukum Pembahagian (a^m / a^n = a^(m-n)):</b><br>
-                        - Apabila asas nombor sama dibahagikan, kuasa-kuasanya mesti <u>ditolak</u>.<br>
-                        - <i>Contoh Jalan Kerja:</i> Selesaikan 5^5 / 5^2<br>
-                        &nbsp;&nbsp;• Tolak kuasa: 5 - 2 = 3<br>
-                        &nbsp;&nbsp;• Jawapan akhir: 5^3 (atau 125).`
+                        steps: `<b>Huraian & Jalan Kerja Lengkap:</b><br><br>
+                        <b>1. Pendaraban ($a^m \\times a^n = a^{m+n}$):</b> Tambah kuasa apabila asas sama.<br>
+                        <i>Contoh:</i> $2^3 \\times 2^4 = 2^{3+4} = 2^7$ (128).<br><br>
+                        <b>2. Pembahagian ($a^m \\div a^n = a^{m-n}$):</b> Tolak kuasa apabila asas sama.<br>
+                        <i>Contoh:</i> $5^5 \\div 5^2 = 5^{5-2} = 5^3$ (125).`
                     },
                     { 
                         name: 'Bab 2: Bentuk Piawai', 
-                        concept: 'Cara menulis nombor sangat besar atau sangat kecil dalam format A x 10^n (1 <= A < 10).',
-                        steps: `<b>Huraian & Jalan Kerja Lengkap 1 Persatu:</b><br><br>
-                        <b>Langkah 1:</b> Gerakkan titik perpuluhan hingga tinggal 1 digit nombor sah di depan (antara 1 hingga 9.99).<br>
-                        <b>Langkah 2:</b> Tentukan nilai kuasa n (bilangan tempat titik digerakkan).<br>
-                        - Gerak ke <b>KIRI</b> = Kuasa <b>POSITIF</b> (+)<br>
-                        - Gerak ke <b>KANAN</b> = Kuasa <b>NEGATIF</b> (-)<br><br>
-                        <i>Contoh Jalan Kerja:</i> Tulis 45000 dalam bentuk piawai.<br>
-                        1. Gerak titik dari belakang ke kiri sebanyak 4 tempat menjadi 4.5.<br>
-                        2. Kerana gerak ke kiri sebanyak 4 tempat, kuasa jadi positif 4.<br>
-                        3. <b>Jawapan Akhir:</b> 4.5 x 10^4.`
+                        concept: 'Penulisan nombor besar atau kecil dalam format $A \\times 10^n$ ($1 \\le A < 10$).',
+                        steps: `<b>Huraian & Jalan Kerja Lengkap:</b><br><br>
+                        <b>Langkah:</b> Gerakkan titik perpuluhan sehingga tinggal 1 digit di depan.<br>
+                        - Gerak ke KIRI = Kuasa POSITIF (+)<br>
+                        - Gerak ke KANAN = Kuasa NEGATIF (-)<br>
+                        <i>Contoh:</i> $45000 = 4.5 \\times 10^4$.`
+                    },
+                    { 
+                        name: 'Bab 3: Matematik Pengguna (Simpanan & Pelaburan)', 
+                        concept: 'Pengiraan Faedah Mudah ($I = Prt$) dan Faedah Kompaun.',
+                        steps: `<b>Huraian & Jalan Kerja Lengkap:</b><br><br>
+                        <b>Rumus Faedah Mudah:</b> $I = Prt$<br>
+                        <i>Contoh:</i> Simpanan RM5000, kadar 3% setahun selama 2 tahun.<br>
+                        $I = 5000 \\times (3/100) \\times 2 = \\text{RM}300$.`
+                    },
+                    { 
+                        name: 'Bab 4: Lukisan Berskala', 
+                        concept: 'Hubungan ukuran sebenar objek dengan lukisan berskala $1 : n$.',
+                        steps: `<b>Huraian & Jalan Kerja Lengkap:</b><br><br>
+                        Rumus: $\\text{Ukuran Lukisan} = \\text{Ukuran Sebenar} \\times \\text{Skala}$.<br>
+                        Sentiasa pastikan unit pertukaran (cm ke meter) diselaraskan terlebih dahulu.`
+                    },
+                    { 
+                        name: 'Bab 5: Nisbah, Kadar & Perkadaran', 
+                        concept: 'Membandingkan kuantiti serta mengira laju, jarak dan masa.',
+                        steps: `<b>Huraian & Jalan Kerja Lengkap:</b><br><br>
+                        Rumus Laju = $\\frac{\\text{Jarak}}{\\text{Masa}}$.<br>
+                        <i>Contoh:</i> Jarak 180 km dalam masa 2 jam $\\rightarrow 180 / 2 = 90\\text{ km/j}$.`
                     },
                     { 
                         name: 'Bab 6: Teorem Pythagoras', 
-                        concept: 'Mencari panjang sisi yang tidak diketahui dalam segi tiga bersudut tegak.',
-                        steps: `<b>Huraian & Jalan Kerja Lengkap 1 Persatu:</b><br><br>
-                        <b>Rumus Utama:</b> c^2 = a^2 + b^2<br>
-                        (c = Hipotenus / sisi paling panjang; a dan b = sisi pendek).<br><br>
-                        <i>Contoh Jalan Kerja:</i> Diberi tapak a = 3 cm dan tinggi b = 4 cm. Cari panjang hipotenus c.<br>
-                        1. Tulis rumus: c^2 = a^2 + b^2<br>
-                        2. Gantikan nilai: c^2 = 3^2 + 4^2<br>
-                        3. Hitung kuasa dua: c^2 = 9 + 16<br>
-                        4. Campurkan nilai: c^2 = 25<br>
-                        5. Punca kuasakan: c = punca kuasa 2 bagi 25 = 5 cm (Jawapan Akhir).`
+                        concept: 'Mencari panjang sisi tidak diketahui dalam segi tiga bersudut tegak.',
+                        steps: `<b>Huraian & Jalan Kerja Lengkap:</b><br><br>
+                        Rumus: $c^2 = a^2 + b^2$ ($c$ ialah hipotenus).<br>
+                        <i>Contoh:</i> Tapak $a = 3$, tinggi $b = 4 \\rightarrow c^2 = 3^2 + 4^2 = 25 \\rightarrow c = 5\\text{ cm}$.`
+                    },
+                    { 
+                        name: 'Bab 7: Pelan dan Dongakan', 
+                        concept: 'Unjuran ortogon objek 3 dimensi pada satah mengufuk dan mencancang.',
+                        steps: `<b>Huraian Langkah Demi Langkah:</b><br><br>
+                        1. Pelan = Pandangan dari atas.<br>
+                        2. Dongakan Depan = Pandangan dari arah depan.<br>
+                        3. Dongakan Sisi = Pandangan dari tepi.<br>Pastikan saiz unjuran selari dengan objek asal.`
                     }
                 ]
             },
@@ -179,53 +192,47 @@
                 title: 'Sains Tingkatan 3',
                 color: 'green',
                 chapters: [
-                    { 
-                        name: 'Bab 1: Rangsangan dan Gerak Balas', 
-                        concept: 'Bagaimana sistem saraf manusia mengesan perubahan luar dan menghasilkan tindak balas.',
-                        steps: `<b>Huraian 1 Persatu:</b><br><br>
-                        1. <b>Reseptor:</b> Mengesan rangsangan (contoh: kulit rasa panas).<br>
-                        2. <b>Saraf Deria:</b> Hantar impuls elektrik ke otak.<br>
-                        3. <b>Pusat Kawalan (Otak):</b> Mentafsir maklumat.<br>
-                        4. <b>Saraf Motor:</b> Hantar arahan ke otot.<br>
-                        5. <b>Efektor:</b> Otot menggerakkan tangan mengelak objek panas.`
-                    }
+                    { name: 'Bab 1: Rangsangan dan Gerak Balas', concept: 'Sistem saraf manusia mengesan rangsangan.', steps: '<b>Huraian:</b> Reseptor $\\rightarrow$ Saraf Deria $\\rightarrow$ Otak $\\rightarrow$ Saraf Motor $\\rightarrow$ Efektor.' },
+                    { name: 'Bab 2: Respirasi', concept: 'Mekanisme pernafasan manusia.', steps: '<b>Huraian:</b> Perbezaan otot interkostal dan pergerakan diafragma semasa menarik dan menghembus nafas.' },
+                    { name: 'Bab 3: Kitaran Nutrien dalam Ekosistem', concept: 'Kitar karbon dan kitar nitrogen.', steps: '<b>Huraian:</b> Peranan bakteria pengikat nitrogen dan kilat menyuburkan tanah.' },
+                    { name: 'Bab 4: Kesihatan Manusia', concept: 'Penyakit berjangkit dan tidak berjangkit.', steps: '<b>Huraian:</b> Perbandingan jenis penyakit serta cara pencegahan dan imunisasi.' },
+                    { name: 'Bab 5: Air dan Larutan', concept: 'Sifat fizik air dan proses larutan.', steps: '<b>Huraian:</b> Perbezaan larutan cair, pekat, dan tepu pada suhu tertentu.' },
+                    { name: 'Bab 6: Termokimia', concept: 'Tindak balas eksotermik dan endotermik.', steps: '<b>Huraian:</b> Eksotermik membebaskan haba (suhu naik), endotermik menyerap haba (suhu turun).' },
+                    { name: 'Bab 7: Keelektrikan dan Kekomagnetan', concept: 'Arus, voltan, rintangan & Hukum Ohm.', steps: '<b>Huraian:</b> Rumus $V = I \\times R$.' },
+                    { name: 'Bab 8: Tenaga dan Kuasa', concept: 'Kecekapan tenaga alatan rumah.', steps: '<b>Huraian:</b> Rumus kecekapan tenaga peratus output bahagi input.' },
+                    { name: 'Bab 9: Bumi dan Angkasa Lepas', concept: 'Satelit dan cuaca angkasa lepas.', steps: '<b>Huraian:</b> Fungsi satelit komunikasi dan satelit cuaca.' }
                 ]
             },
             'sejarah': {
                 title: 'Sejarah Tingkatan 3',
                 color: 'amber',
                 chapters: [
-                    { 
-                        name: 'Bab 1: Kedatangan Kuasa Luar', 
-                        concept: 'Faktor dan strategi kuasa besar campur tangan di Tanah Melayu.',
-                        steps: `<b>Huraian Kronologi 1 Persatu:</b><br>
-                        - Kekayaan bijih timah menarik minat British.<br>
-                        - Strategi British menggunakan pajakan (Pulau Pinang), tipu muslihat (Perak), dan ugutan terhadap pemimpin tempatan.`
-                    }
+                    { name: 'Bab 1: Kedatangan Kuasa Luar', concept: 'Faktor dan strategi kuasa besar.', steps: '<b>Huraian:</b> Kekayaan bijih timah serta taktik pajakan, tipu muslihat, dan ugutan.' },
+                    { name: 'Bab 2: Pentadbiran Negeri-Negeri Melayu', concept: 'Sistem Residen dan Penasihat British.', steps: '<b>Huraian:</b> Kesan kehilangan kuasa sultan terhadap pentadbiran dan pungutan cukai.' },
+                    { name: 'Bab 3: Pentadbiran British & Kesannya', concept: 'Ekonomi moden dan masyarakat majmuk.', steps: '<b>Huraian:</b> Kemasukan buruh luar melalui sistem tiket kredit dan kangani.' },
+                    { name: 'Bab 4: Penentangan Masyarakat Tempatan', concept: 'Perjuangan pahlawan negara.', steps: '<b>Huraian:</b> Rentap, Dato Bahaman, Tok Janggut, Mat Salleh menentang dasar British.' },
+                    { name: 'Bab 5: Gerakan Nasionalisme', concept: 'Kesedaran awal melalui akhbar dan persatuan.', steps: '<b>Huraian:</b> Peranan Kaum Muda dan intelektual melayu membangkitkan semangat bangsa.' },
+                    { name: 'Bab 6: Kesan Pendudukan Jepun', concept: 'Pengalaman pentadbiran tentera Jepun.', steps: '<b>Huraian:</b> Kesusahan hidup rakyat, catuan makanan, dan buruh paksa.' }
                 ]
             },
             'bm': {
                 title: 'Bahasa Melayu Tingkatan 3',
                 color: 'rose',
                 chapters: [
-                    { 
-                        name: '1. Tatabahasa (Ayat Aktif & Pasif)', 
-                        concept: 'Panduan menukar ayat aktif kepada ayat pasif mengikut hukum tatabahasa DBP.',
-                        steps: `<b>Huraian & Jalan Kerja 1 Persatu:</b><br>
-                        - Orang 1 & 2 (Saya/Awak): Tiada imbuhan 'di-'. (Contoh: Buku itu <i>saya baca</i>).<br>
-                        - Orang 3 (Dia/Ali): Wajib guna 'di-' dan 'oleh'. (Contoh: Buku itu <i>dibaca oleh Ali</i>).`
-                    }
+                    { name: '1. Tatabahasa (Ayat Aktif & Pasif)', concept: 'Panduan menukar ayat aktif ke pasif.', steps: '<b>Huraian:</b> Orang 1/2 tiada "di-", Orang 3 wajib ada "di-" dan "oleh".' },
+                    { name: '2. Karangan Bahagian A (Ulasan)', concept: 'Format penulisan ulasan grafik.', steps: '<b>Huraian:</b> 80-100 patah perkataan merangkumi pengenalan, isi tersurat/tersirat, dan penutup.' },
+                    { name: '3. Karangan Bahagian B (Berformat)', concept: 'Format syarahan, rencana, dan surat rasmi.', steps: '<b>Huraian:</b> Panduan protokol kata alu-aluan dan penutup rasmi.' },
+                    { name: '4. Komsas & Novel Tingkatan 3', concept: 'Analisis sastera dan novel KSSM.', steps: '<b>Huraian:</b> Tema, persoalan, watak perwatakan dan nilai murni.' }
                 ]
             },
             'english': {
                 title: 'English T3 (Support BM)',
                 color: 'purple',
                 chapters: [
-                    { 
-                        name: '1. Literature Component', 
-                        concept: 'Analisis sastera dengan terjemahan nota Bahasa Melayu.',
-                        steps: `<b>Huraian 1 Persatu:</b> Fahami maksud tersirat sajak dan nilai murni novel terbitan KSSM untuk persediaan peperiksaan.`
-                    }
+                    { name: '1. Literature Component', concept: 'Poems & Short stories analysis.', steps: '<b>Huraian:</b> Terjemahan BM dan nota pemahaman maksud sajak.' },
+                    { name: '2. Novel: The Interloper', concept: 'Character and plot analysis.', steps: '<b>Huraian:</b> Panduan watak utama Artie dan nilai murni.' },
+                    { name: '3. Directed Writing', concept: 'Formal letters and reports.', steps: '<b>Huraian:</b> Susunan format alamat, salutation, dan penutup.' },
+                    { name: '4. Grammar Focus', concept: 'Past Simple & Past Continuous.', steps: '<b>Huraian:</b> Penggunaan was/were + verb-ing dengan betul dalam ayat.' }
                 ]
             }
         };
