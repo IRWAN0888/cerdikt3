@@ -3,24 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CerdikT3 - Tutor Peribadi AI Tingkatan 3</title>
+    <title>CerdikT3 - Cikgu Peribadi Suara & Nota KSSM</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body class="bg-slate-50 font-sans text-slate-800">
+    <!-- HEADER -->
     <header class="bg-indigo-600 text-white shadow-md sticky top-0 z-50">
         <div class="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
-            <h1 class="text-xl font-bold flex items-center gap-2 cursor-pointer" onclick="showHome()"><i class="fa-solid fa-graduation-cap"></i> CerdikT3</h1>
-            <span class="text-xs bg-indigo-500 px-3 py-1 rounded-full"><i class="fa-solid fa-chalkboard-user"></i> Mod Guru Mengajar</span>
+            <h1 class="text-xl font-bold flex items-center gap-2 cursor-pointer" onclick="showHome()"><i class="fa-solid fa-house-chimney-user"></i> CerdikT3</h1>
+            <span class="text-xs bg-indigo-500 px-3 py-1 rounded-full"><i class="fa-solid fa-microphone-lines"></i> Tutor Suara & Jalan Kira AI</span>
         </div>
     </header>
 
     <main class="max-w-4xl mx-auto px-4 py-8">
-        <!-- LAMAN UTAMA -->
+        <!-- LAMAN UTAMA: PILIH SUBJEK -->
         <div id="home-view">
             <section class="text-center mb-8">
-                <h2 class="text-2xl font-bold mb-2">Pusat Pembelajaran Digital Tingkatan 3</h2>
-                <p class="text-slate-600">Pilih subjek di bawah. Cikgu AI akan terangkan nota buku teks dan tunjuk jalan kira lengkap satu persatu!</p>
+                <h2 class="text-2xl font-bold mb-2">Kelas Cikgu Di Rumah (Boleh Cakap & Dengar Suara)</h2>
+                <p class="text-slate-600">Pilih subjek di bawah untuk belajar bab buku teks KSSM. Adik boleh taip atau tekan butang mikrofon untuk bercakap terus dengan Cikgu AI!</p>
             </section>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
@@ -28,7 +29,7 @@
                     <div class="bg-blue-100 text-blue-600 p-4 rounded-lg text-xl"><i class="fa-solid fa-calculator"></i></div>
                     <div>
                         <h3 class="font-bold text-lg">Matematik T3</h3>
-                        <p class="text-sm text-slate-500">Nota & Jalan Kira Lengkap</p>
+                        <p class="text-sm text-slate-500">Huraian & Jalan Kira Lengkap 1 Persatu</p>
                     </div>
                 </div>
 
@@ -36,7 +37,7 @@
                     <div class="bg-green-100 text-green-600 p-4 rounded-lg text-xl"><i class="fa-solid fa-atom"></i></div>
                     <div>
                         <h3 class="font-bold text-lg">Sains T3</h3>
-                        <p class="text-sm text-slate-500">Konsep & Penerangan Buku Teks</p>
+                        <p class="text-sm text-slate-500">Konsep Sains & Eksperimen Buku Teks</p>
                     </div>
                 </div>
 
@@ -44,7 +45,7 @@
                     <div class="bg-amber-100 text-amber-600 p-4 rounded-lg text-xl"><i class="fa-solid fa-landmark"></i></div>
                     <div>
                         <h3 class="font-bold text-lg">Sejarah T3</h3>
-                        <p class="text-sm text-slate-500">Kronologi & Huraian Sejarah</p>
+                        <p class="text-sm text-slate-500">Kronologi Peristiwa & Huraian Buku Teks</p>
                     </div>
                 </div>
 
@@ -60,9 +61,27 @@
                     <div class="bg-purple-100 text-purple-600 p-4 rounded-lg text-xl"><i class="fa-solid fa-language"></i></div>
                     <div>
                         <h3 class="font-bold text-lg">English T3 (Support BM)</h3>
-                        <p class="text-sm text-slate-500">Literature & Novel dengan Panduan BM</p>
+                        <p class="text-sm text-slate-500">Literature, Novel & Grammar Terjemahan BM</p>
                     </div>
                 </div>
+            </div>
+
+            <!-- KOTAK TANYA CIKGU AI DENGAN SUARA -->
+            <div class="bg-gradient-to-r from-indigo-900 to-purple-900 text-white p-6 rounded-2xl shadow-lg">
+                <h3 class="font-bold text-xl mb-2 flex items-center gap-2">
+                    <i class="fa-solid fa-robot text-indigo-400"></i> Tanya Cikgu AI Melalui Suara atau Taip:
+                </h3>
+                <p class="text-sm text-indigo-200 mb-4">Tekan butang mikrofon merah dan terus bercakap masalah kerja sekolah adik:</p>
+                <div class="flex gap-2 mb-3">
+                    <input type="text" id="ai-input" placeholder="Cth: Cikgu, tolong terangkan jalan kira bentuk piawai..." class="flex-1 px-4 py-3 rounded-xl text-sm text-slate-800 focus:outline-none bg-white">
+                    <button onclick="startVoiceInput()" id="mic-btn" class="bg-rose-500 hover:bg-rose-600 text-white px-4 py-3 rounded-xl font-medium text-sm transition shadow-sm flex items-center gap-1" title="Cakap dengan AI">
+                        <i class="fa-solid fa-microphone"></i> Cakap
+                    </button>
+                    <button onclick="askAITutor()" class="bg-indigo-500 hover:bg-indigo-600 text-white px-5 py-3 rounded-xl font-medium text-sm transition shadow-sm">
+                        Hantar
+                    </button>
+                </div>
+                <div id="ai-response-box" class="bg-white/15 backdrop-blur-md p-4 rounded-xl border border-white/20 text-sm text-indigo-100 hidden"></div>
             </div>
         </div>
 
@@ -74,39 +93,24 @@
             <div id="subject-content" class="bg-white p-6 rounded-xl shadow-sm border border-slate-100"></div>
         </div>
 
-        <!-- LAMAN NOTA & PENERANGAN (TIADA KUIZ) -->
+        <!-- LAMAN NOTA & JALAN KIRA LENGKAP -->
         <div id="chapter-view" class="hidden">
             <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
                 <button onclick="backToSubject()" class="text-sm bg-slate-200 hover:bg-slate-300 px-4 py-2 rounded-lg font-medium transition flex items-center gap-2">
                     <i class="fa-solid fa-arrow-left"></i> Kembali ke Senarai Bab
                 </button>
-                <button onclick="speakNote()" class="text-sm bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg font-medium transition flex items-center gap-2 shadow-sm">
-                    <i class="fa-solid fa-volume-high"></i> Dengar Penerangan
+                <button onclick="speakCurrentContent()" class="text-sm bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg font-medium transition flex items-center gap-2 shadow-sm">
+                    <i class="fa-solid fa-volume-high"></i> Dengar Suara Cikgu Baca Nota
                 </button>
             </div>
             
             <div id="chapter-content" class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 mb-6"></div>
-
-            <!-- RUJUKAN TAMBAHAN & YOUTUBE -->
-            <div class="bg-slate-900 text-white p-6 rounded-2xl shadow-lg">
-                <h3 class="font-bold text-lg mb-2 flex items-center gap-2 text-indigo-300">
-                    <i class="fa-solid fa-circle-question"></i> Masih Tak Faham? Tanya Cikgu AI & Rujuk YouTube:
-                </h3>
-                <p class="text-xs text-slate-300 mb-4">Taip bahagian mana yang adik nak Cikgu huraikan lagi.</p>
-                <div class="flex gap-2 mb-3">
-                    <input type="text" id="followup-input" placeholder="Cth: Cikgu, terangkan lagi macam mana dapat nilai tu..." class="flex-1 px-4 py-3 rounded-xl text-sm text-slate-800 focus:outline-none bg-white">
-                    <button onclick="askAITutor()" class="bg-indigo-500 hover:bg-indigo-600 text-white px-5 py-3 rounded-xl font-medium text-sm transition shadow-sm">
-                        Huraikan Lagi
-                    </button>
-                </div>
-                <div id="followup-answer" class="bg-white/10 backdrop-blur-md p-4 rounded-xl border border-white/15 text-sm text-slate-200 hidden"></div>
-            </div>
         </div>
     </main>
 
     <script>
         let currentSubjectKey = '';
-        let speakText = '';
+        let fullSpeakText = '';
 
         const database = {
             'matematik': {
@@ -115,23 +119,20 @@
                 chapters: [
                     { 
                         name: 'Bab 1: Indeks', 
-                        concept: 'Hukum indeks melibatkan pendaraban, pembahagian, dan kuasa bagi nombor berindeks asas sama.',
-                        steps: '1. Pendaraban (a^m x a^n = a^(m+n)): Kuasa ditambah.<br>2. Pembahagian (a^m / a^n = a^(m-n)): Kuasa ditolak.<br><br><b>Contoh Jalan Kira Lengkap:</b><br>Selesaikan: 2^3 x 2^2<br>= 2^(3 + 2)<br>= 2^5<br>= 32' 
+                        concept: 'Hukum Indeks melibatkan pendaraban, pembahagian, dan kuasa nombor berindeks asas sama.',
+                        steps: `<b>Huraian 1 Persatu & Jalan Kira:</b><br><br>
+                        <b>1. Hukum Pendaraban ($a^m \\times a^n = a^{m+n}$):</b><br>Apabila asas nombor sama didarabkan, kuasa-kuasanya mesti <u>dijumlahkan</u>.<br><i>Contoh:</i> Selesaikan $2^3 \\times 2^4 = 2^{3+4} = 2^7$ (128).<br><br>
+                        <b>2. Hukum Pembahagian ($a^m \\div a^n = a^{m-n}$):</b><br>Apabila asas sama dibahagikan, kuasa ditolak.<br><i>Contoh:</i> $5^5 \\div 5^2 = 5^{5-2} = 5^3$ (125).`,
+                        youtube: 'https://www.youtube.com/results?search_query=matematik+tingkatan+3+bab+1+indeks'
                     },
                     { 
                         name: 'Bab 2: Bentuk Piawai', 
-                        concept: 'Nombor ditulis dalam format A x 10^n di mana 1 <= A < 10.',
-                        steps: '1. Gerakkan titik perpuluhan sehingga tinggal 1 digit di depan.<br>2. Gerak ke kiri kuasa positif, ke kanan kuasa negatif.<br><br><b>Contoh Jalan Kira:</b><br>45000 dalam bentuk piawai ialah 4.5 x 10^4.' 
-                    },
-                    { 
-                        name: 'Bab 3: Matematik Pengguna', 
-                        concept: 'Kiraan Faedah Mudah (I = Prt) dan Faedah Kompaun.',
-                        steps: '<b>Contoh Jalan Kira:</b><br>Simpanan RM5000, kadar 3% setahun selama 2 tahun.<br>I = 5000 x (3/100) x 2 = RM300.' 
-                    },
-                    { 
-                        name: 'Bab 6: Teorem Pythagoras', 
-                        concept: 'Hubungan panjang sisi dalam segi tiga bersudut tegak.',
-                        steps: 'Rumus: c^2 = a^2 + b^2 (c ialah hipotenus).<br><br><b>Contoh Jalan Kira:</b><br>Jika tapak 3 cm, tinggi 4 cm.<br>c^2 = 3^2 + 4^2 = 9 + 16 = 25.<br>c = punca kuasa 2 bagi 25 = 5 cm.' 
+                        concept: 'Cara menulis nombor sangat besar atau kecil dalam format $A \\times 10^n$ ($1 \\le A < 10$).',
+                        steps: `<b>Huraian 1 Persatu & Jalan Kira:</b><br><br>
+                        <b>Langkah 1:</b> Gerakkan titik perpuluhan hingga tinggal 1 digit di depan.<br>
+                        <b>Langkah 2:</b> Gerak ke KIRI kuasa POSITIF (+), gerak ke KANAN kuasa NEGATIF (-).<br>
+                        <i>Contoh:</i> $45000 = 4.5 \\times 10^4$ (titik gerak 4 tempat ke kiri).`,
+                        youtube: 'https://www.youtube.com/results?search_query=matematik+tingkatan+3+bab+2+bentuk+piawai'
                     }
                 ]
             },
@@ -140,14 +141,10 @@
                 color: 'green',
                 chapters: [
                     { 
-                        name: 'Bab 1: Rangsangan & Gerak Balas', 
-                        concept: 'Sistem saraf manusia mengesan dan bertindak balas terhadap rangsangan persekitaran.',
-                        steps: 'Laluan: Reseptor -> Saraf Deria -> Pusat Kawalan (Otak) -> Saraf Motor -> Efektor.' 
-                    },
-                    { 
-                        name: 'Bab 2: Respirasi', 
-                        concept: 'Mekanisme pernafasan manusia dan pertukaran gas di alveolus.',
-                        steps: 'Tarik nafas: Diafragma mendatar, udara masuk kaya dengan Oksigen.<br>Hembus nafas: Diafragma melengkung, udara keluar kaya Karbon dioksida.' 
+                        name: 'Bab 1: Rangsangan dan Gerak Balas', 
+                        concept: 'Sistem saraf manusia mengesan perubahan luar dan menghasilkan tindak balas.',
+                        steps: `<b>Huraian 1 Persatu Konsep Sains:</b><br>Reseptor -> Saraf Deria -> Pusat Kawalan (Otak) -> Saraf Motor -> Efektor (Otot bergerak balas).`,
+                        youtube: 'https://www.youtube.com/results?search_query=sains+tingkatan+3+bab+1+rangsangan'
                     }
                 ]
             },
@@ -157,13 +154,9 @@
                 chapters: [
                     { 
                         name: 'Bab 1: Kedatangan Kuasa Luar', 
-                        concept: 'British campur tangan di Tanah Melayu demi kekayaan hasil bumi.',
-                        steps: 'Strategi British: Pajakan, tipu muslihat, ugutan, dan paksaan terhadap pemimpin tempatan.' 
-                    },
-                    { 
-                        name: 'Bab 4: Penentangan Masyarakat Tempatan', 
-                        concept: 'Perjuangan tokoh pahlawan menentang pentadbiran British.',
-                        steps: 'Tokoh utama: Rentap (Sarawak), Dato\' Bahaman (Pahang), Tok Janggut (Kelantan), Mat Salleh (Sabah).' 
+                        concept: 'Faktor dan strategi kuasa besar campur tangan di Tanah Melayu.',
+                        steps: `<b>Huraian Kronologi:</b> Kekayaan hasil bumi bijih timah serta strategi British menggunakan pajakan, tipu muslihat, dan ugutan.`,
+                        youtube: 'https://www.youtube.com/results?search_query=sejarah+tingkatan+3+bab+1'
                     }
                 ]
             },
@@ -173,8 +166,9 @@
                 chapters: [
                     { 
                         name: '1. Tatabahasa (Ayat Aktif & Pasif)', 
-                        concept: 'Cara menukar ayat aktif kepada ayat pasif dengan betul.',
-                        steps: 'Contoh:<br>Aktif: Ali membaca buku.<br>Pasif: Buku itu dibaca oleh Ali.' 
+                        concept: 'Panduan menukar ayat aktif kepada ayat pasif mengikut hukum DBP.',
+                        steps: `<b>Huraian:</b> Orang pertama/kedua (saya/awak) tiada imbuhan di-. Orang ketiga (dia/Ali) wajib guna imbuhan di- dan oleh.`,
+                        youtube: 'https://www.youtube.com/results?search_query=bahasa+melayu+tingkatan+3+ayat+aktif+pasif'
                     }
                 ]
             },
@@ -184,8 +178,9 @@
                 chapters: [
                     { 
                         name: '1. Literature Component', 
-                        concept: 'Analisis sastera dengan panduan Bahasa Melayu.',
-                        steps: 'Fahami tema, watak, dan mesej moral dalam teks yang dipelajari.' 
+                        concept: 'Analisis sastera dengan terjemahan nota Bahasa Melayu.',
+                        steps: `<b>Huraian:</b> Memahami maksud sajak dan nilai murni novel terbitan KSSM.`,
+                        youtube: 'https://www.youtube.com/results?search_query=english+form+3+literature'
                     }
                 ]
             }
@@ -207,7 +202,7 @@
             
             document.getElementById('subject-content').innerHTML = `
                 <h2 class="text-2xl font-bold mb-2 text-${data.color}-600">${data.title}</h2>
-                <p class="text-slate-600 mb-6">Pilih tajuk di bawah untuk membaca nota dan jalan kira lengkap:</p>
+                <p class="text-slate-600 mb-6">Pilih bab di bawah untuk huraian jalan kira lengkap dan pautan YouTube:</p>
                 <div>${listHtml}</div>
             `;
             window.scrollTo(0, 0);
@@ -219,37 +214,100 @@
             
             const data = database[currentSubjectKey];
             const ch = data.chapters[index];
-            speakText = `${ch.name}. Konsep: ${ch.concept}. Penerangan: ${ch.steps.replace(/<[^>]*>/g, '')}`;
+            fullSpeakText = `${ch.name}. Konsep utama: ${ch.concept}. Penerangan jalan kerja: ${ch.steps.replace(/<[^>]*>/g, '')}`;
 
             document.getElementById('chapter-content').innerHTML = `
                 <h2 class="text-2xl font-bold mb-3 text-${data.color}-600">${ch.name}</h2>
+                
                 <div class="bg-indigo-50 p-4 rounded-xl border border-indigo-100 mb-4">
-                    <h3 class="font-bold text-indigo-900 mb-1"><i class="fa-solid fa-lightbulb mr-1"></i> Konsep Utama Buku Teks:</h3>
+                    <h3 class="font-bold text-indigo-900 mb-1"><i class="fa-solid fa-lightbulb mr-1"></i> Konsep Utama:</h3>
                     <p class="text-slate-700 leading-relaxed">${ch.concept}</p>
                 </div>
-                <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-100">
-                    <h3 class="font-bold text-emerald-900 mb-1"><i class="fa-solid fa-list-check mr-1"></i> Penerangan & Jalan Kira Lengkap:</h3>
-                    <p class="text-slate-700 leading-relaxed text-sm">${ch.steps}</p>
+
+                <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-100 mb-6">
+                    <h3 class="font-bold text-emerald-900 mb-2"><i class="fa-solid fa-list-check mr-1"></i> Huraian Jalan Kerja Lengkap:</h3>
+                    <div class="text-slate-700 leading-relaxed text-sm space-y-2">${ch.steps}</div>
+                </div>
+
+                <div class="bg-red-50 p-5 rounded-xl border border-red-200 text-center">
+                    <h3 class="font-bold text-red-900 mb-2"><i class="fa-brands fa-youtube text-red-600 text-xl mr-1"></i> Rujukan Video YouTube:</h3>
+                    <a href="${ch.youtube}" target="_blank" class="inline-block bg-red-600 hover:bg-red-700 text-white font-bold px-6 py-3 rounded-xl text-sm transition shadow-md">
+                        <i class="fa-solid fa-play mr-1"></i> Tonton Penerangan Video YouTube
+                    </a>
                 </div>
             `;
             window.scrollTo(0, 0);
+            speakCurrentContent(); // Auto baca nota bila buka bab
         }
 
+        // FUNGSI CAKAP GUNA MIKROFON (SPEECH-TO-TEXT)
+        function startVoiceInput() {
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            if (!SpeechRecognition) {
+                alert('Maaf, pelayar web telefon anda tidak menyokong input suara.');
+                return;
+            }
+
+            const recognition = new SpeechRecognition();
+            recognition.lang = 'ms-MY';
+            
+            const micBtn = document.getElementById('mic-btn');
+            micBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Mendengar...`;
+            micBtn.classList.remove('bg-rose-500');
+            micBtn.classList.add('bg-amber-500');
+
+            recognition.start();
+
+            recognition.onresult = function(event) {
+                const text = event.results[0][0].transcript;
+                document.getElementById('ai-input').value = text;
+                micBtn.innerHTML = `<i class="fa-solid fa-microphone"></i> Cakap`;
+                micBtn.classList.remove('bg-amber-500');
+                micBtn.classList.add('bg-rose-500');
+                askAITutor();
+            };
+
+            recognition.onerror = function() {
+                alert('Gagal mengesan suara. Sila cuba sekali lagi.');
+                micBtn.innerHTML = `<i class="fa-solid fa-microphone"></i> Cakap`;
+                micBtn.classList.remove('bg-amber-500');
+                micBtn.classList.add('bg-rose-500');
+            };
+        }
+
+        // FUNGSI AI JAWAB & BACA BERSUARA
         function askAITutor() {
-            const q = document.getElementById('followup-input').value.trim();
-            const ans = document.getElementById('followup-answer');
-            if(!q) { alert('Sila taip soalan.'); return; }
-            ans.classList.remove('hidden');
-            ans.innerHTML = `Cikgu AI sedang sediakan huraian dan carian video YouTube...`;
+            const query = document.getElementById('ai-input').value.trim();
+            const box = document.getElementById('ai-response-box');
+
+            if(!query) {
+                alert('Sila taip atau cakap soalan terlebih dahulu.');
+                return;
+            }
+
+            box.classList.remove('hidden');
+            box.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-2"></i> Cikgu AI sedang menyiap jawapan...`;
+
             setTimeout(() => {
-                ans.innerHTML = `<b>🤖 Huraian Cikgu AI:</b><br>Mengenai "${q}", kuncinya ialah fahami rumus asas dan ulang langkah pengiraan di atas.<br><br>🎥 <a href="https://www.youtube.com/results?search_query=kssm+tingkatan+3+${encodeURIComponent(q)}" target="_blank" class="text-cyan-300 underline font-bold">Klik sini untuk tonton penerangan di YouTube</a>`;
+                let reply = `Bagus soalan adik tentang "${query}". Sebagai Cikgu di rumah, kuncinya ialah fahami konsep asas, ikut langkah demi langkah dengan teliti, dan jangan gopoh buat latihan. Adik juga boleh tonton video penerangan lengkap di YouTube!`;
+                
+                box.innerHTML = `<b>🤖 Cikgu AI:</b><br><br>${reply}`;
+
+                // AI terus baca jawapan secara lisan kepada murid
+                if ('speechSynthesis' in window) {
+                    window.speechSynthesis.cancel();
+                    let utterance = new SpeechSynthesisUtterance(reply);
+                    utterance.lang = 'ms-MY';
+                    utterance.rate = 0.9;
+                    window.speechSynthesis.speak(utterance);
+                }
             }, 800);
         }
 
-        function speakNote() {
+        function speakCurrentContent() {
             if ('speechSynthesis' in window) {
                 window.speechSynthesis.cancel();
-                let utterance = new SpeechSynthesisUtterance(speakText);
+                let utterance = new SpeechSynthesisUtterance(fullSpeakText);
                 utterance.lang = 'ms-MY';
                 utterance.rate = 0.9;
                 window.speechSynthesis.speak(utterance);
