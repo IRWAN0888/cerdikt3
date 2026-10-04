@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CerdikT3 - Cikgu Peribadi Suara & Nota KSSM</title>
+    <title>CerdikT3 - Cikgu Peribadi Dirumah</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -12,18 +12,39 @@
     <header class="bg-indigo-600 text-white shadow-md sticky top-0 z-50">
         <div class="max-w-4xl mx-auto px-4 py-4 flex justify-between items-center">
             <h1 class="text-xl font-bold flex items-center gap-2 cursor-pointer" onclick="showHome()"><i class="fa-solid fa-house-chimney-user"></i> CerdikT3</h1>
-            <span class="text-xs bg-indigo-500 px-3 py-1 rounded-full"><i class="fa-solid fa-microphone-lines"></i> Tutor Suara & Jalan Kira AI</span>
+            <span class="text-xs bg-indigo-500 px-3 py-1 rounded-full"><i class="fa-solid fa-chalkboard-user"></i> Jalan Kerja & Nota Lengkap</span>
         </div>
     </header>
 
     <main class="max-w-4xl mx-auto px-4 py-8">
-        <!-- LAMAN UTAMA: PILIH SUBJEK -->
+        <!-- LAMAN UTAMA -->
         <div id="home-view">
-            <section class="text-center mb-8">
-                <h2 class="text-2xl font-bold mb-2">Kelas Cikgu Di Rumah (Boleh Cakap & Dengar Suara)</h2>
-                <p class="text-slate-600">Pilih subjek di bawah untuk belajar bab buku teks KSSM. Adik boleh taip atau tekan butang mikrofon untuk bercakap terus dengan Cikgu AI!</p>
+            <section class="text-center mb-6">
+                <h2 class="text-2xl font-bold mb-2">Kelas Cikgu Di Rumah</h2>
+                <p class="text-slate-600 mb-6">Pilih subjek di bawah atau tanya Cikgu AI terus menggunakan kotak carian gaya Gemini.</p>
             </section>
 
+            <!-- KOTAK CARIAN GAYA GEMINI (SEPERTI DALAM GAMBAR) -->
+            <div class="max-w-xl mx-auto mb-8">
+                <div class="bg-white rounded-full shadow-md border border-slate-200 px-4 py-2 flex items-center gap-3">
+                    <button class="w-10 h-10 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center transition" title="Tambah / Lampiran">
+                        <i class="fa-solid fa-plus"></i>
+                    </button>
+                    
+                    <input type="text" id="gemini-search-input" placeholder="Tanya Cikgu AI..." class="flex-1 bg-transparent border-none focus:outline-none text-slate-700 text-base placeholder-slate-400">
+                    
+                    <button onclick="alert('Sila taip soalan atau pilih subjek di bawah.')" class="text-slate-500 hover:text-indigo-600 p-2 transition" title="Cakap">
+                        <i class="fa-solid fa-microphone text-lg"></i>
+                    </button>
+
+                    <button onclick="triggerGeminiSearch()" class="w-10 h-10 rounded-full bg-sky-100 hover:bg-sky-200 text-sky-600 flex items-center justify-center transition shadow-sm" title="Mod Suara / Hantar">
+                        <i class="fa-solid fa-sliders text-sm"></i>
+                    </button>
+                </div>
+                <div id="gemini-result-box" class="mt-3 bg-indigo-900 text-white p-4 rounded-2xl text-sm hidden shadow-lg"></div>
+            </div>
+
+            <!-- PILIHAN SUBJEK -->
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-8">
                 <div onclick="openSubject('matematik')" class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 flex items-center gap-4 cursor-pointer hover:border-blue-400 transition">
                     <div class="bg-blue-100 text-blue-600 p-4 rounded-lg text-xl"><i class="fa-solid fa-calculator"></i></div>
@@ -65,24 +86,6 @@
                     </div>
                 </div>
             </div>
-
-            <!-- KOTAK TANYA CIKGU AI DENGAN SUARA -->
-            <div class="bg-gradient-to-r from-indigo-900 to-purple-900 text-white p-6 rounded-2xl shadow-lg">
-                <h3 class="font-bold text-xl mb-2 flex items-center gap-2">
-                    <i class="fa-solid fa-robot text-indigo-400"></i> Tanya Cikgu AI Melalui Suara atau Taip:
-                </h3>
-                <p class="text-sm text-indigo-200 mb-4">Tekan butang mikrofon merah dan terus bercakap masalah kerja sekolah adik:</p>
-                <div class="flex gap-2 mb-3">
-                    <input type="text" id="ai-input" placeholder="Cth: Cikgu, tolong terangkan jalan kira bentuk piawai..." class="flex-1 px-4 py-3 rounded-xl text-sm text-slate-800 focus:outline-none bg-white">
-                    <button onclick="startVoiceInput()" id="mic-btn" class="bg-rose-500 hover:bg-rose-600 text-white px-4 py-3 rounded-xl font-medium text-sm transition shadow-sm flex items-center gap-1" title="Cakap dengan AI">
-                        <i class="fa-solid fa-microphone"></i> Cakap
-                    </button>
-                    <button onclick="askAITutor()" class="bg-indigo-500 hover:bg-indigo-600 text-white px-5 py-3 rounded-xl font-medium text-sm transition shadow-sm">
-                        Hantar
-                    </button>
-                </div>
-                <div id="ai-response-box" class="bg-white/15 backdrop-blur-md p-4 rounded-xl border border-white/20 text-sm text-indigo-100 hidden"></div>
-            </div>
         </div>
 
         <!-- LAMAN SENARAI BAB -->
@@ -93,24 +96,35 @@
             <div id="subject-content" class="bg-white p-6 rounded-xl shadow-sm border border-slate-100"></div>
         </div>
 
-        <!-- LAMAN NOTA & JALAN KIRA LENGKAP -->
+        <!-- LAMAN NOTA & JALAN KERJA LENGKAP -->
         <div id="chapter-view" class="hidden">
-            <div class="flex justify-between items-center mb-4 flex-wrap gap-2">
+            <div class="mb-4">
                 <button onclick="backToSubject()" class="text-sm bg-slate-200 hover:bg-slate-300 px-4 py-2 rounded-lg font-medium transition flex items-center gap-2">
                     <i class="fa-solid fa-arrow-left"></i> Kembali ke Senarai Bab
-                </button>
-                <button onclick="speakCurrentContent()" class="text-sm bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg font-medium transition flex items-center gap-2 shadow-sm">
-                    <i class="fa-solid fa-volume-high"></i> Dengar Suara Cikgu Baca Nota
                 </button>
             </div>
             
             <div id="chapter-content" class="bg-white p-6 rounded-xl shadow-sm border border-slate-100 mb-6"></div>
+
+            <!-- KOTAK BANTUAN DI BAWAH: HANYA KELUAR LINK YOUTUBE BILA MURID TANYA (MASIH TAK FAHAM) -->
+            <div class="bg-slate-900 text-white p-6 rounded-2xl shadow-lg">
+                <h3 class="font-bold text-lg mb-2 flex items-center gap-2 text-indigo-300">
+                    <i class="fa-solid fa-circle-question"></i> Masih Belum Faham Jalan Kerja Di Atas?
+                </h3>
+                <p class="text-xs text-slate-300 mb-4">Taip bahagian mana yang adik nak Cikgu huraikan lagi. Cikgu akan beri penerangan dan pautan YouTube.</p>
+                <div class="flex gap-2 mb-3">
+                    <input type="text" id="followup-input" placeholder="Cth: Cikgu, saya tak faham macam mana dapat nilai tu..." class="flex-1 px-4 py-3 rounded-xl text-sm text-slate-800 focus:outline-none bg-white">
+                    <button onclick="askFollowupAI()" class="bg-indigo-500 hover:bg-indigo-600 text-white px-5 py-3 rounded-xl font-medium text-sm transition shadow-sm">
+                        Huraikan Lagi
+                    </button>
+                </div>
+                <div id="followup-box" class="bg-white/10 backdrop-blur-md p-4 rounded-xl border border-white/15 text-sm text-slate-200 hidden"></div>
+            </div>
         </div>
     </main>
 
     <script>
         let currentSubjectKey = '';
-        let fullSpeakText = '';
 
         const database = {
             'matematik': {
@@ -119,20 +133,45 @@
                 chapters: [
                     { 
                         name: 'Bab 1: Indeks', 
-                        concept: 'Hukum Indeks melibatkan pendaraban, pembahagian, dan kuasa nombor berindeks asas sama.',
-                        steps: `<b>Huraian 1 Persatu & Jalan Kira:</b><br><br>
-                        <b>1. Hukum Pendaraban ($a^m \\times a^n = a^{m+n}$):</b><br>Apabila asas nombor sama didarabkan, kuasa-kuasanya mesti <u>dijumlahkan</u>.<br><i>Contoh:</i> Selesaikan $2^3 \\times 2^4 = 2^{3+4} = 2^7$ (128).<br><br>
-                        <b>2. Hukum Pembahagian ($a^m \\div a^n = a^{m-n}$):</b><br>Apabila asas sama dibahagikan, kuasa ditolak.<br><i>Contoh:</i> $5^5 \\div 5^2 = 5^{5-2} = 5^3$ (125).`,
-                        youtube: 'https://www.youtube.com/results?search_query=matematik+tingkatan+3+bab+1+indeks'
+                        concept: 'Hukum indeks melibatkan pendaraban, pembahagian, dan kuasa nombor berindeks asas sama.',
+                        steps: `<b>Huraian & Jalan Kerja Lengkap 1 Persatu:</b><br><br>
+                        <b>1. Hukum Pendaraban (a^m x a^n = a^(m+n)):</b><br>
+                        - Apabila asas nombor sama didarabkan, kuasa-kuasanya mesti <u>dijumlahkan</u>.<br>
+                        - <i>Contoh Jalan Kerja:</i> Selesaikan 2^3 x 2^4<br>
+                        &nbsp;&nbsp;• Kenal pasti asas: 2 (sama)<br>
+                        &nbsp;&nbsp;• Tambah kuasa: 3 + 4 = 7<br>
+                        &nbsp;&nbsp;• Jawapan akhir: 2^7 (atau 128).<br><br>
+                        <b>2. Hukum Pembahagian (a^m / a^n = a^(m-n)):</b><br>
+                        - Apabila asas nombor sama dibahagikan, kuasa-kuasanya mesti <u>ditolak</u>.<br>
+                        - <i>Contoh Jalan Kerja:</i> Selesaikan 5^5 / 5^2<br>
+                        &nbsp;&nbsp;• Tolak kuasa: 5 - 2 = 3<br>
+                        &nbsp;&nbsp;• Jawapan akhir: 5^3 (atau 125).`
                     },
                     { 
                         name: 'Bab 2: Bentuk Piawai', 
-                        concept: 'Cara menulis nombor sangat besar atau kecil dalam format $A \\times 10^n$ ($1 \\le A < 10$).',
-                        steps: `<b>Huraian 1 Persatu & Jalan Kira:</b><br><br>
-                        <b>Langkah 1:</b> Gerakkan titik perpuluhan hingga tinggal 1 digit di depan.<br>
-                        <b>Langkah 2:</b> Gerak ke KIRI kuasa POSITIF (+), gerak ke KANAN kuasa NEGATIF (-).<br>
-                        <i>Contoh:</i> $45000 = 4.5 \\times 10^4$ (titik gerak 4 tempat ke kiri).`,
-                        youtube: 'https://www.youtube.com/results?search_query=matematik+tingkatan+3+bab+2+bentuk+piawai'
+                        concept: 'Cara menulis nombor sangat besar atau sangat kecil dalam format A x 10^n (1 <= A < 10).',
+                        steps: `<b>Huraian & Jalan Kerja Lengkap 1 Persatu:</b><br><br>
+                        <b>Langkah 1:</b> Gerakkan titik perpuluhan hingga tinggal 1 digit nombor sah di depan (antara 1 hingga 9.99).<br>
+                        <b>Langkah 2:</b> Tentukan nilai kuasa n (bilangan tempat titik digerakkan).<br>
+                        - Gerak ke <b>KIRI</b> = Kuasa <b>POSITIF</b> (+)<br>
+                        - Gerak ke <b>KANAN</b> = Kuasa <b>NEGATIF</b> (-)<br><br>
+                        <i>Contoh Jalan Kerja:</i> Tulis 45000 dalam bentuk piawai.<br>
+                        1. Gerak titik dari belakang ke kiri sebanyak 4 tempat menjadi 4.5.<br>
+                        2. Kerana gerak ke kiri sebanyak 4 tempat, kuasa jadi positif 4.<br>
+                        3. <b>Jawapan Akhir:</b> 4.5 x 10^4.`
+                    },
+                    { 
+                        name: 'Bab 6: Teorem Pythagoras', 
+                        concept: 'Mencari panjang sisi yang tidak diketahui dalam segi tiga bersudut tegak.',
+                        steps: `<b>Huraian & Jalan Kerja Lengkap 1 Persatu:</b><br><br>
+                        <b>Rumus Utama:</b> c^2 = a^2 + b^2<br>
+                        (c = Hipotenus / sisi paling panjang; a dan b = sisi pendek).<br><br>
+                        <i>Contoh Jalan Kerja:</i> Diberi tapak a = 3 cm dan tinggi b = 4 cm. Cari panjang hipotenus c.<br>
+                        1. Tulis rumus: c^2 = a^2 + b^2<br>
+                        2. Gantikan nilai: c^2 = 3^2 + 4^2<br>
+                        3. Hitung kuasa dua: c^2 = 9 + 16<br>
+                        4. Campurkan nilai: c^2 = 25<br>
+                        5. Punca kuasakan: c = punca kuasa 2 bagi 25 = 5 cm (Jawapan Akhir).`
                     }
                 ]
             },
@@ -142,9 +181,13 @@
                 chapters: [
                     { 
                         name: 'Bab 1: Rangsangan dan Gerak Balas', 
-                        concept: 'Sistem saraf manusia mengesan perubahan luar dan menghasilkan tindak balas.',
-                        steps: `<b>Huraian 1 Persatu Konsep Sains:</b><br>Reseptor -> Saraf Deria -> Pusat Kawalan (Otak) -> Saraf Motor -> Efektor (Otot bergerak balas).`,
-                        youtube: 'https://www.youtube.com/results?search_query=sains+tingkatan+3+bab+1+rangsangan'
+                        concept: 'Bagaimana sistem saraf manusia mengesan perubahan luar dan menghasilkan tindak balas.',
+                        steps: `<b>Huraian 1 Persatu:</b><br><br>
+                        1. <b>Reseptor:</b> Mengesan rangsangan (contoh: kulit rasa panas).<br>
+                        2. <b>Saraf Deria:</b> Hantar impuls elektrik ke otak.<br>
+                        3. <b>Pusat Kawalan (Otak):</b> Mentafsir maklumat.<br>
+                        4. <b>Saraf Motor:</b> Hantar arahan ke otot.<br>
+                        5. <b>Efektor:</b> Otot menggerakkan tangan mengelak objek panas.`
                     }
                 ]
             },
@@ -155,8 +198,9 @@
                     { 
                         name: 'Bab 1: Kedatangan Kuasa Luar', 
                         concept: 'Faktor dan strategi kuasa besar campur tangan di Tanah Melayu.',
-                        steps: `<b>Huraian Kronologi:</b> Kekayaan hasil bumi bijih timah serta strategi British menggunakan pajakan, tipu muslihat, dan ugutan.`,
-                        youtube: 'https://www.youtube.com/results?search_query=sejarah+tingkatan+3+bab+1'
+                        steps: `<b>Huraian Kronologi 1 Persatu:</b><br>
+                        - Kekayaan bijih timah menarik minat British.<br>
+                        - Strategi British menggunakan pajakan (Pulau Pinang), tipu muslihat (Perak), dan ugutan terhadap pemimpin tempatan.`
                     }
                 ]
             },
@@ -166,9 +210,10 @@
                 chapters: [
                     { 
                         name: '1. Tatabahasa (Ayat Aktif & Pasif)', 
-                        concept: 'Panduan menukar ayat aktif kepada ayat pasif mengikut hukum DBP.',
-                        steps: `<b>Huraian:</b> Orang pertama/kedua (saya/awak) tiada imbuhan di-. Orang ketiga (dia/Ali) wajib guna imbuhan di- dan oleh.`,
-                        youtube: 'https://www.youtube.com/results?search_query=bahasa+melayu+tingkatan+3+ayat+aktif+pasif'
+                        concept: 'Panduan menukar ayat aktif kepada ayat pasif mengikut hukum tatabahasa DBP.',
+                        steps: `<b>Huraian & Jalan Kerja 1 Persatu:</b><br>
+                        - Orang 1 & 2 (Saya/Awak): Tiada imbuhan 'di-'. (Contoh: Buku itu <i>saya baca</i>).<br>
+                        - Orang 3 (Dia/Ali): Wajib guna 'di-' dan 'oleh'. (Contoh: Buku itu <i>dibaca oleh Ali</i>).`
                     }
                 ]
             },
@@ -179,12 +224,22 @@
                     { 
                         name: '1. Literature Component', 
                         concept: 'Analisis sastera dengan terjemahan nota Bahasa Melayu.',
-                        steps: `<b>Huraian:</b> Memahami maksud sajak dan nilai murni novel terbitan KSSM.`,
-                        youtube: 'https://www.youtube.com/results?search_query=english+form+3+literature'
+                        steps: `<b>Huraian 1 Persatu:</b> Fahami maksud tersirat sajak dan nilai murni novel terbitan KSSM untuk persediaan peperiksaan.`
                     }
                 ]
             }
         };
+
+        function triggerGeminiSearch() {
+            const val = document.getElementById('gemini-search-input').value.trim();
+            const box = document.getElementById('gemini-result-box');
+            if(!val) {
+                alert('Sila taip soalan di dalam kotak "Tanya Cikgu AI...".');
+                return;
+            }
+            box.classList.remove('hidden');
+            box.innerHTML = `<b>🤖 Cikgu AI:</b> Mengenai "${val}", sila pilih subjek di bawah untuk melihat nota terperinci dan jalan kerja langkah demi langkah!`;
+        }
 
         function openSubject(key) {
             currentSubjectKey = key;
@@ -202,7 +257,7 @@
             
             document.getElementById('subject-content').innerHTML = `
                 <h2 class="text-2xl font-bold mb-2 text-${data.color}-600">${data.title}</h2>
-                <p class="text-slate-600 mb-6">Pilih bab di bawah untuk huraian jalan kira lengkap dan pautan YouTube:</p>
+                <p class="text-slate-600 mb-6">Pilih bab di bawah untuk melihat huraian jalan kerja lengkap:</p>
                 <div>${listHtml}</div>
             `;
             window.scrollTo(0, 0);
@@ -214,115 +269,51 @@
             
             const data = database[currentSubjectKey];
             const ch = data.chapters[index];
-            fullSpeakText = `${ch.name}. Konsep utama: ${ch.concept}. Penerangan jalan kerja: ${ch.steps.replace(/<[^>]*>/g, '')}`;
 
             document.getElementById('chapter-content').innerHTML = `
                 <h2 class="text-2xl font-bold mb-3 text-${data.color}-600">${ch.name}</h2>
                 
                 <div class="bg-indigo-50 p-4 rounded-xl border border-indigo-100 mb-4">
-                    <h3 class="font-bold text-indigo-900 mb-1"><i class="fa-solid fa-lightbulb mr-1"></i> Konsep Utama:</h3>
+                    <h3 class="font-bold text-indigo-900 mb-1"><i class="fa-solid fa-lightbulb mr-1"></i> Konsep Utama Buku Teks:</h3>
                     <p class="text-slate-700 leading-relaxed">${ch.concept}</p>
                 </div>
 
-                <div class="bg-emerald-50 p-4 rounded-xl border border-emerald-100 mb-6">
-                    <h3 class="font-bold text-emerald-900 mb-2"><i class="fa-solid fa-list-check mr-1"></i> Huraian Jalan Kerja Lengkap:</h3>
+                <div class="bg-emerald-50 p-5 rounded-xl border border-emerald-100">
+                    <h3 class="font-bold text-emerald-900 mb-3"><i class="fa-solid fa-list-check mr-1"></i> Huraian Jalan Kerja & Langkah Demi Langkah:</h3>
                     <div class="text-slate-700 leading-relaxed text-sm space-y-2">${ch.steps}</div>
-                </div>
-
-                <div class="bg-red-50 p-5 rounded-xl border border-red-200 text-center">
-                    <h3 class="font-bold text-red-900 mb-2"><i class="fa-brands fa-youtube text-red-600 text-xl mr-1"></i> Rujukan Video YouTube:</h3>
-                    <a href="${ch.youtube}" target="_blank" class="inline-block bg-red-600 hover:bg-red-700 text-white font-bold px-6 py-3 rounded-xl text-sm transition shadow-md">
-                        <i class="fa-solid fa-play mr-1"></i> Tonton Penerangan Video YouTube
-                    </a>
                 </div>
             `;
             window.scrollTo(0, 0);
-            speakCurrentContent(); // Auto baca nota bila buka bab
         }
 
-        // FUNGSI CAKAP GUNA MIKROFON (SPEECH-TO-TEXT)
-        function startVoiceInput() {
-            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-            if (!SpeechRecognition) {
-                alert('Maaf, pelayar web telefon anda tidak menyokong input suara.');
-                return;
-            }
-
-            const recognition = new SpeechRecognition();
-            recognition.lang = 'ms-MY';
-            
-            const micBtn = document.getElementById('mic-btn');
-            micBtn.innerHTML = `<i class="fa-solid fa-spinner fa-spin"></i> Mendengar...`;
-            micBtn.classList.remove('bg-rose-500');
-            micBtn.classList.add('bg-amber-500');
-
-            recognition.start();
-
-            recognition.onresult = function(event) {
-                const text = event.results[0][0].transcript;
-                document.getElementById('ai-input').value = text;
-                micBtn.innerHTML = `<i class="fa-solid fa-microphone"></i> Cakap`;
-                micBtn.classList.remove('bg-amber-500');
-                micBtn.classList.add('bg-rose-500');
-                askAITutor();
-            };
-
-            recognition.onerror = function() {
-                alert('Gagal mengesan suara. Sila cuba sekali lagi.');
-                micBtn.innerHTML = `<i class="fa-solid fa-microphone"></i> Cakap`;
-                micBtn.classList.remove('bg-amber-500');
-                micBtn.classList.add('bg-rose-500');
-            };
-        }
-
-        // FUNGSI AI JAWAB & BACA BERSUARA
-        function askAITutor() {
-            const query = document.getElementById('ai-input').value.trim();
-            const box = document.getElementById('ai-response-box');
+        function askFollowupAI() {
+            const query = document.getElementById('followup-input').value.trim();
+            const box = document.getElementById('followup-box');
 
             if(!query) {
-                alert('Sila taip atau cakap soalan terlebih dahulu.');
+                alert('Sila taip bahagian mana yang adik masih tak faham.');
                 return;
             }
 
             box.classList.remove('hidden');
-            box.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-2"></i> Cikgu AI sedang menyiap jawapan...`;
+            box.innerHTML = `<i class="fa-solid fa-spinner fa-spin mr-2"></i> Cikgu AI sedang huraikan dan sediakan rujukan video...`;
 
             setTimeout(() => {
-                let reply = `Bagus soalan adik tentang "${query}". Sebagai Cikgu di rumah, kuncinya ialah fahami konsep asas, ikut langkah demi langkah dengan teliti, dan jangan gopoh buat latihan. Adik juga boleh tonton video penerangan lengkap di YouTube!`;
+                let reply = `Jangan risau. Mengenai "${query}", kuncinya ialah ulang semula langkah pengiraan di atas perlahan-lahan.<br><br>` +
+                            `🎥 <b>Rujukan Tambahan YouTube:</b><br>` +
+                            `<a href="https://www.youtube.com/results?search_query=kssm+tingkatan+3+${encodeURIComponent(query)}" target="_blank" class="text-cyan-300 underline font-bold"><i class="fa-brands fa-youtube text-red-500"></i> Klik sini untuk tonton penerangan video di YouTube</a>`;
                 
                 box.innerHTML = `<b>🤖 Cikgu AI:</b><br><br>${reply}`;
-
-                // AI terus baca jawapan secara lisan kepada murid
-                if ('speechSynthesis' in window) {
-                    window.speechSynthesis.cancel();
-                    let utterance = new SpeechSynthesisUtterance(reply);
-                    utterance.lang = 'ms-MY';
-                    utterance.rate = 0.9;
-                    window.speechSynthesis.speak(utterance);
-                }
             }, 800);
         }
 
-        function speakCurrentContent() {
-            if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel();
-                let utterance = new SpeechSynthesisUtterance(fullSpeakText);
-                utterance.lang = 'ms-MY';
-                utterance.rate = 0.9;
-                window.speechSynthesis.speak(utterance);
-            }
-        }
-
         function backToSubject() {
-            window.speechSynthesis.cancel();
             document.getElementById('chapter-view').classList.add('hidden');
             document.getElementById('subject-view').classList.remove('hidden');
             window.scrollTo(0, 0);
         }
 
         function showHome() {
-            window.speechSynthesis.cancel();
             document.getElementById('subject-view').classList.add('hidden');
             document.getElementById('chapter-view').classList.add('hidden');
             document.getElementById('home-view').classList.remove('hidden');
